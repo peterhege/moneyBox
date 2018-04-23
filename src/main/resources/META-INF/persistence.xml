@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" version="2.1">
+    <persistence-unit name="pet-persistence-unit">
+        <class>hu.unideb.inf.prtpk.model.Product</class>
+        <properties>
+            <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"/>
+            <property name="javax.persistence.jdbc.url" value="http://localhost:1527/petdb"/>
+            <property name="javax.persistence.schema-generation.database.action" value="none"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.use_sql_comments" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+        </properties>
+    </persistence-unit>
+</persistence>

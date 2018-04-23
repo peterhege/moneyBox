@@ -4,9 +4,23 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>hu.unideb.inf.prt-pk</groupId>
+    <groupId>hu.unideb.inf.prtpk</groupId>
     <artifactId>moneyBox</artifactId>
     <version>1.0</version>
+    <dependencies>
+        <!-- Hibernate -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>5.2.13.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>5.2.13.Final</version>
+            <scope>runtime</scope>
+        </dependency>
+    </dependencies>
 
 
 </project>
