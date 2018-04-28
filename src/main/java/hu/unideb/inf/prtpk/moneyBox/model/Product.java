@@ -20,8 +20,8 @@ public class Product {
 
     private int savedAmount;
 
-    /*@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Users user;*/
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private User user;
 
     public Product() {
         this.savedAmount = 0;
@@ -81,13 +81,13 @@ public class Product {
         this.savedAmount = savedAmount;
     }
 
-    /*public Users getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(Users user) {
+    public void setUser(User user) {
         this.user = user;
-    }*/
+    }
 
     @Override
     public String toString() {
