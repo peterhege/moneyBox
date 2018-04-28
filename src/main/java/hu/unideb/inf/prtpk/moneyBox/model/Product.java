@@ -24,14 +24,21 @@ public class Product {
     private Users user;*/
 
     public Product() {
+        this.savedAmount = 0;
     }
 
-    public Product(String name, String url, int price, int savedAmount/*, Users user*/) {
+    public Product(String name, String url, int price) {
+        this.name = name;
+        this.url = url;
+        this.price = price;
+        this.savedAmount = 0;
+    }
+
+    public Product(String name, String url, int price, int savedAmount) {
         this.name = name;
         this.url = url;
         this.price = price;
         this.savedAmount = savedAmount;
-        //this.user = user;
     }
 
     public Long getId() {

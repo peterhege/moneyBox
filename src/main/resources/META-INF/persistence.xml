@@ -4,7 +4,7 @@
         <class>hu.unideb.inf.prtpk.moneyBox.model.Product</class>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"/>
-            <property name="javax.persistence.jdbc.url" value="http://localhost:1527/moneyBoxDB"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/moneyBoxDB"/>
             <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.use_sql_comments" value="true"/>

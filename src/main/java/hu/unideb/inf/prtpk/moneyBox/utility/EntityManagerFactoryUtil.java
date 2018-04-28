@@ -22,7 +22,7 @@ public class EntityManagerFactoryUtil implements AutoCloseable {
      * Példányosítás | Make an instance
      * @return EntityManagerFactoryUtil egyetlen példánya | Single Instance of EntityManagerFactoryUtil
      */
-    public EntityManagerFactoryUtil getInstance() {
+    public static EntityManagerFactoryUtil getInstance() {
         return singleton;
     }
 
