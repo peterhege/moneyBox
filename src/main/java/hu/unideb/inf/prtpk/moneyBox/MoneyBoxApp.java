@@ -15,6 +15,13 @@ public class MoneyBoxApp {
      * @param args STDIN paraméter tömb
      */
     public static void main(String[] args) {
+        ProductDAO productDAO = new ProductDAOImpl();
+        Product product = new Product(
+                "Huawei Watch okosóra fém tokkal és fémháló szíjjal",
+                "https://edigital.hu/okosora/huawei-watch-okosora-fem-tokkal-es-femhalo-szijjal-p408376",
+                129990
+        );
 
+        productDAO.persist(product);
     }
 }

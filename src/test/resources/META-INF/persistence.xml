@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" version="2.1">
+    <persistence-unit name="money-box-persistence-unit">
+        <class>hu.unideb.inf.prtpk.moneyBox.model.Product</class>
+        <properties>
+            <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/moneyBoxTestDB;create=true"/>
+            <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.use_sql_comments" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+        </properties>
+    </persistence-unit>
+</persistence>
