@@ -11,16 +11,21 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * ProductDAO implementálása | Implemens ProductDAO
+ * <pre>ProductDAO implementálása.</pre>
+ *
  * @see ProductDAO
  */
-public class ProductDAOImpl implements ProductDAO{
+public class ProductDAOImpl implements ProductDAO {
 
+    /**
+     * <pre>EntityManager előkészítése.</pre>
+     */
     private EntityManager entityManager;
 
     /**
-     * Konstruktor | Constructor
-     * EntityManager készítése | Make EntityManager
+     * <pre>Konstruktor, mely elkészíti az EntityManager-t.</pre>
+     *
+     * @see EntityManagerFactoryUtil
      */
     public ProductDAOImpl() {
         EntityManagerFactory entityManagerFactory = EntityManagerFactoryUtil.getInstance().getEntityManagerFactory();

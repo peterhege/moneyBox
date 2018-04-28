@@ -5,11 +5,16 @@ import hu.unideb.inf.prtpk.moneyBox.model.Product;
 import java.util.List;
 
 /**
- * Termékek kezelése | Manage Products
+ * <pre>Az adatbázisban tárolt termékek kezelésére szolgáló osztály.</pre>
  */
 public interface ProductDAO extends GenericDAO<Product, Long> {
     /**
-     * @return Összes termék az adatbázisból | All Product from Database
+     * <pre>Visszaadja az összes terméket az adatbázisból.</pre>
+     * <code class="example-code">
+     *     ProductDAO dao = new ProductDAOImpl();<br>
+     *     dao.getAllProduct();
+     * </code>
+     * @return Termékek listája
      */
     List<Product> getAllProduct();
 }

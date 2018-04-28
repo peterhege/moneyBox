@@ -4,31 +4,43 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 /**
- * Erőforrás spórolás | Resource saving
+ * <pre>Erőforrás spórolását elősegítő osztály.</pre>
  */
 public class EntityManagerFactoryUtil implements AutoCloseable {
+    /**
+     * Az osztály példányosítása.
+     */
     private static final EntityManagerFactoryUtil singleton = new EntityManagerFactoryUtil();
+
+    /**
+     * A persistence.xml-ben megadott persistence-unit tag name attribútuma.
+     */
     private static final String PERSISTENCE_UNIT_NAME = "money-box-persistence-unit";
 
+    /**
+     * EntityManagerFactory.
+     */
     private EntityManagerFactory entityManagerFactory;
 
     /**
-     * Üres konstruktor | Empty constructor
+     * <pre>Üres konstruktor.</pre>
      */
     private EntityManagerFactoryUtil() {
     }
 
     /**
-     * Példányosítás | Make an instance
-     * @return EntityManagerFactoryUtil egyetlen példánya | Single Instance of EntityManagerFactoryUtil
+     * <pre>Visszatér a példánnyal.</pre>
+     *
+     * @return {@link #singleton}
      */
     public static EntityManagerFactoryUtil getInstance() {
         return singleton;
     }
 
     /**
-     * Az EntityManagerFactory perzisztálása, ha nem létezik | If EntityManagerFactory not exist than persist it
-     * @return entityManagerFactory
+     * <pre>Az EntityManagerFactory perzisztálása, ha még nem történt meg.</pre>
+     *
+     * @return {@link #entityManagerFactory}
      */
     public EntityManagerFactory getEntityManagerFactory() {
         /*Map<String, String> properties = new HashMap<String, String>();
@@ -40,7 +52,7 @@ public class EntityManagerFactoryUtil implements AutoCloseable {
     }
 
     /**
-     * A példány lezárása | Close the instance
+     * <pre>A példány lezárása.</pre>
      */
     @Override
     public void close() {
