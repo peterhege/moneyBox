@@ -23,7 +23,7 @@ public interface GenericDAO<T, ID extends Serializable> {
     T findById(ID id);
 
     /**
-     * Entity eltávilítása | Remove an entity
+     * Entity eltávolítása | Remove an entity
      * @param entity Entity
      */
     void remove(T entity);

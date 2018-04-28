@@ -2,6 +2,9 @@ package hu.unideb.inf.prtpk.model;
 
 import javax.persistence.*;
 
+/**
+ * Termék Entity | Product Entity
+ */
 @Entity
 public class Product {
 
