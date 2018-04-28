@@ -1,4 +1,4 @@
-package hu.unideb.inf.prtpk.model;
+package hu.unideb.inf.prtpk.moneyBox.model;
 
 import javax.persistence.*;
 
@@ -20,18 +20,18 @@ public class Product {
 
     private int savedAmount;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Users user;
+    /*@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Users user;*/
 
     public Product() {
     }
 
-    public Product(String name, String url, int price, int savedAmount, Users user) {
+    public Product(String name, String url, int price, int savedAmount/*, Users user*/) {
         this.name = name;
         this.url = url;
         this.price = price;
         this.savedAmount = savedAmount;
-        this.user = user;
+        //this.user = user;
     }
 
     public Long getId() {
@@ -74,13 +74,13 @@ public class Product {
         this.savedAmount = savedAmount;
     }
 
-    public Users getUser() {
+    /*public Users getUser() {
         return user;
     }
 
     public void setUser(Users user) {
         this.user = user;
-    }
+    }*/
 
     @Override
     public String toString() {
