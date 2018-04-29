@@ -37,10 +37,10 @@ public class Product {
 
     /**
      * Egy termékhez tartozó felhasználó (entitás).
-     * @see User
+     * @see Client
      */
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = User.class)
-    private User user;
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Client client;
 
     /**
      * Üres konstruktor.
@@ -148,17 +148,17 @@ public class Product {
     }
 
     /**
-     * @return {@link #user}
+     * @return {@link #client}
      */
-    public User getUser() {
-        return user;
+    public Client getClient() {
+        return client;
     }
 
     /**
-     * @param user {@link #user}
+     * @param client {@link #client}
      */
-    public void setUser(User user) {
-        this.user = user;
+    public void setClient(Client client) {
+        this.client = client;
     }
 
     @Override

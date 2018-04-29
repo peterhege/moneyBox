@@ -1,6 +1,8 @@
 package hu.unideb.inf.prtpk.moneyBox;
 
+import hu.unideb.inf.prtpk.moneyBox.dao.ClientDAOImpl;
 import hu.unideb.inf.prtpk.moneyBox.dao.ProductDAOImpl;
+import hu.unideb.inf.prtpk.moneyBox.dao.api.ClientDAO;
 import hu.unideb.inf.prtpk.moneyBox.dao.api.ProductDAO;
 import hu.unideb.inf.prtpk.moneyBox.model.Product;
 
@@ -21,6 +23,8 @@ public class MoneyBoxApp {
                 "https://edigital.hu/okosora/huawei-watch-okosora-fem-tokkal-es-femhalo-szijjal-p408376",
                 129990
         );
+
+        ClientDAO clientDAO = new ClientDAOImpl();
 
         productDAO.persist(product);
     }

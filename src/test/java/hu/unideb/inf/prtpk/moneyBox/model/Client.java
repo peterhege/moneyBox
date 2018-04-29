@@ -8,7 +8,7 @@ import java.util.List;
  * Adatbázisbeli Felhasználókat leíró osztály.
  */
 @Entity
-public class User {
+public class Client {
 
     /**
      * Egy felhasználó automatikusan generált azonosítója.
@@ -38,13 +38,13 @@ public class User {
      *
      * @see Product
      */
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "client")
     private List<Product> products;
 
     /**
      * <pre>Üres konstruktor, a termékeknek üres lista létrehozása.</pre>
      */
-    public User() {
+    public Client() {
         this.products = new ArrayList<>();
     }
 
@@ -55,7 +55,7 @@ public class User {
      * @param password {@link #password}
      * @param email    {@link #email}
      */
-    public User(String userName, String password, String email) {
+    public Client(String userName, String password, String email) {
         this.userName = userName;
         this.password = password;
         this.email = email;
@@ -88,14 +88,14 @@ public class User {
     /**
      * @return {@link #userName}
      */
-    public String getUserName() {
+    public String getClientName() {
         return userName;
     }
 
     /**
      * @param userName {@link #userName}
      */
-    public void setUserName(String userName) {
+    public void setClientName(String userName) {
         this.userName = userName;
     }
 
@@ -143,7 +143,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "Client{" +
                 "id=" + id +
                 ", userName='" + userName + '\'' +
                 ", password='" + password + '\'' +
