@@ -1,1 +1,1 @@
-# <img src="logo.png" height="10"> moneyBox
+# <img src="logo.png" height="32"> moneyBox
