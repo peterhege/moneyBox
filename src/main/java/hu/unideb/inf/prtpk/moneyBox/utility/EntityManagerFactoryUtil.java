@@ -1,5 +1,8 @@
 package hu.unideb.inf.prtpk.moneyBox.utility;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
@@ -7,6 +10,12 @@ import javax.persistence.Persistence;
  * <pre>Erőforrás spórolását elősegítő osztály.</pre>
  */
 public class EntityManagerFactoryUtil implements AutoCloseable {
+
+    /**
+     * <pre>LoggerFactory a logoláshoz.</pre>
+     */
+    private static Logger logger = LoggerFactory.getLogger(EntityManagerFactoryUtil.class);
+
     /**
      * Az osztály példányosítása.
      */
@@ -46,6 +55,7 @@ public class EntityManagerFactoryUtil implements AutoCloseable {
         /*Map<String, String> properties = new HashMap<String, String>();
         properties.put("javax.persistence.jdbc.password", "");*/
         if (entityManagerFactory == null) {
+            logger.info("Create EntityManagerFactory");
             entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
         }
         return entityManagerFactory;
