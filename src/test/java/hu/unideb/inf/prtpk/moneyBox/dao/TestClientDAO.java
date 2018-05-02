@@ -31,7 +31,7 @@ public class TestClientDAO {
     @Test
     public void testPersist() {
         clientDAO.persist(user);
-        List<Client> clients = clientDAO.getAllClient();
+        List<Client> clients = clientDAO.getAll();
         clientDAO.remove(clients.get(0));
 
         assertEquals(1, clients.size());
@@ -40,9 +40,9 @@ public class TestClientDAO {
     @Test
     public void testRemove() {
         clientDAO.persist(user);
-        List<Client> clients = clientDAO.getAllClient();
+        List<Client> clients = clientDAO.getAll();
         clientDAO.remove(clients.get(0));
-        clients = clientDAO.getAllClient();
+        clients = clientDAO.getAll();
 
         assertEquals(0, clients.size());
     }
@@ -50,7 +50,7 @@ public class TestClientDAO {
     @Test
     public void testFindById() {
         clientDAO.persist(user);
-        List<Client> clients = clientDAO.getAllClient();
+        List<Client> clients = clientDAO.getAll();
 
         Client createdClient = clients.get(0);
         Long id = createdClient.getId();

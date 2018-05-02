@@ -15,45 +15,11 @@ import java.util.Optional;
  *
  * @see ProductDAO
  */
-public class ProductDAOImpl implements ProductDAO {
-
+public class ProductDAOImpl extends GenericDAOImpl<Product, Long> implements ProductDAO {
     /**
-     * <pre>EntityManager előkészítése.</pre>
+     * <pre>Konstruktor, mely átadja az osztály típusát.</pre>
      */
-    private EntityManager entityManager;
-
-    /**
-     * <pre>Konstruktor, mely elkészíti az EntityManager-t.</pre>
-     *
-     * @see EntityManagerFactoryUtil
-     */
-    public ProductDAOImpl() {
-        EntityManagerFactory entityManagerFactory = EntityManagerFactoryUtil.getInstance().getEntityManagerFactory();
-        entityManager = entityManagerFactory.createEntityManager();
-    }
-
-    @Override
-    public List<Product> getAllProduct() {
-        TypedQuery<Product> query = entityManager.createQuery("SELECT p FROM hu.unideb.inf.prtpk.moneyBox.model.Product p", Product.class);
-        return query.getResultList();
-    }
-
-    @Override
-    public void persist(Product entity) {
-        entityManager.getTransaction().begin();
-        entityManager.persist(entity);
-        entityManager.getTransaction().commit();
-    }
-
-    @Override
-    public Optional<Product> findById(Long id) {
-        return Optional.of(entityManager.find(Product.class, id));
-    }
-
-    @Override
-    public void remove(Product entity) {
-        entityManager.getTransaction().begin();
-        entityManager.remove(entity);
-        entityManager.getTransaction().commit();
+    ProductDAOImpl() {
+        super(Product.class);
     }
 }

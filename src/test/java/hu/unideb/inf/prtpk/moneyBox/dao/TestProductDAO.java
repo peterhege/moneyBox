@@ -2,11 +2,8 @@ package hu.unideb.inf.prtpk.moneyBox.dao;
 
 import hu.unideb.inf.prtpk.moneyBox.dao.api.ProductDAO;
 import hu.unideb.inf.prtpk.moneyBox.model.Product;
-import hu.unideb.inf.prtpk.moneyBox.utility.EntityManagerFactoryUtil;
 import org.junit.Test;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -23,7 +20,7 @@ public class TestProductDAO {
     @Test
     public void testPersist() {
         productDAO.persist(product);
-        List<Product> products = productDAO.getAllProduct();
+        List<Product> products = productDAO.getAll();
         productDAO.remove(products.get(0));
 
         assertEquals(1, products.size());
@@ -32,9 +29,9 @@ public class TestProductDAO {
     @Test
     public void testRemove() {
         productDAO.persist(product);
-        List<Product> products = productDAO.getAllProduct();
+        List<Product> products = productDAO.getAll();
         productDAO.remove(products.get(0));
-        products = productDAO.getAllProduct();
+        products = productDAO.getAll();
 
         assertEquals(0, products.size());
     }
@@ -42,7 +39,7 @@ public class TestProductDAO {
     @Test
     public void testFindById(){
         productDAO.persist(product);
-        List<Product> products = productDAO.getAllProduct();
+        List<Product> products = productDAO.getAll();
 
         Product createdProduct = products.get(0);
         Long id = createdProduct.getId();
