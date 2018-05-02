@@ -12,8 +12,8 @@ import java.util.Optional;
 /**
  * <pre>Implementálja a DAO-k közös metódusait.</pre>
  *
- * @param <T>
- * @param <ID>
+ * @param <T>   A DAO-hoz tartozó entitás
+ * @param <ID>  Az entitás azonosítója
  */
 public class GenericDAOImpl<T, ID> implements GenericDAO<T, ID> {
     /**

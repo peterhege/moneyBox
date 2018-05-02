@@ -3,14 +3,19 @@ package hu.unideb.inf.prtpk.moneyBox.dao;
 import hu.unideb.inf.prtpk.moneyBox.dao.api.ClientDAO;
 import hu.unideb.inf.prtpk.moneyBox.model.Product;
 import hu.unideb.inf.prtpk.moneyBox.model.Client;
-import org.junit.Test;
+import hu.unideb.inf.prtpk.moneyBox.utility.EntityManagerFactoryUtil;
+import org.junit.*;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Query;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
 public class TestClientDAO {
     private ClientDAO clientDAO = new ClientDAOImpl();
+    private EntityManager entityManager;
 
     private Product product = new Product(
             "Huawei Watch okosóra fém tokkal és fémháló szíjjal",
@@ -24,17 +29,27 @@ public class TestClientDAO {
             "user@mail.com"
     );
 
+    private void clearAllTable() {
+        entityManager.getTransaction().begin();
+        entityManager.createQuery("DELETE FROM Client").executeUpdate();
+        entityManager.createQuery("DELETE FROM Product").executeUpdate();
+        entityManager.getTransaction().commit();
+    }
+
     {
         user.addProduct(product);
+        EntityManagerFactory entityManagerFactory = EntityManagerFactoryUtil.getInstance().getEntityManagerFactory();
+        entityManager = entityManagerFactory.createEntityManager();
     }
 
     @Test
     public void testPersist() {
         clientDAO.persist(user);
         List<Client> clients = clientDAO.getAll();
-        clientDAO.remove(clients.get(0));
 
         assertEquals(1, clients.size());
+
+        clearAllTable();
     }
 
     @Test
@@ -45,6 +60,8 @@ public class TestClientDAO {
         clients = clientDAO.getAll();
 
         assertEquals(0, clients.size());
+
+        clearAllTable();
     }
 
     @Test
@@ -57,7 +74,8 @@ public class TestClientDAO {
 
         Client foundClient = clientDAO.findById(id).get();
 
-        clientDAO.remove(createdClient);
         assertEquals(createdClient, foundClient);
+
+        clearAllTable();
     }
 }
