@@ -60,17 +60,21 @@ public class GenericDAOImpl<T, ID> implements GenericDAO<T, ID> {
     @Override
     public Optional<T> findById(ID id) {
         logger.info("Search " + type.getName() + " entity by ID: " + id);
-        return Optional.of(entityManager.find(type, id));
+        try {
+            return Optional.of(entityManager.find(type, id));
+        } catch (NullPointerException e) {
+            logger.info("The " + type.getName() + " doesn't exist");
+            return Optional.empty();
+        }
     }
 
     @Override
-    public Optional<T> findBy(String entityParamName, String entityParam){
+    public Optional<T> findBy(String entityParamName, String entityParam) {
         logger.info("Search " + type.getName() + " entity by " + entityParamName + ": " + entityParam);
-        try{
+        try {
             TypedQuery<T> query = entityManager.createQuery("SELECT c FROM " + type.getName() + " c WHERE c." + entityParamName + " LIKE :entityParam", type).setParameter("entityParam", entityParam);
             return Optional.of(query.getSingleResult());
-        }
-        catch (NoResultException e){
+        } catch (NoResultException e) {
             logger.info("The " + type.getName() + " doesn't exist");
             return Optional.empty();
         }
