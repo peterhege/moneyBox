@@ -4,8 +4,6 @@ import hu.unideb.inf.prtpk.moneyBox.dao.api.ClientDAO;
 import hu.unideb.inf.prtpk.moneyBox.model.Client;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.persistence.TypedQuery;
 import java.util.Optional;
 
 /**
