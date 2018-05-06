@@ -34,9 +34,18 @@ public interface GenericDAO<T, ID> {
      * </code>
      *
      * @param id Az entitás azonosítója, pl.: 1
-     * @return Az entitás példánya
+     * @return Entitásnak megfelelő {@link Optional}
      */
     Optional<T> findById(ID id);
+
+    /**
+     * <pre>Adott entitás adatbázisbeli példányának keresése a megadott paraméterek alapján.</pre>
+     *
+     * @param entityParamName Mely paraméter alapján keressünk
+     * @param entityParam     A paraméter értéke, ami alapján keressünk
+     * @return Entitásnak megfelelő {@link Optional}
+     */
+    Optional<T> findBy(String entityParamName, String entityParam);
 
     /**
      * <pre>Entitás eltávolítása az adatbázisból.</pre>
@@ -62,5 +71,4 @@ public interface GenericDAO<T, ID> {
      * @return T entitások listája.
      */
     List<T> getAll();
-
 }

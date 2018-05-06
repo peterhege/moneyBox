@@ -28,7 +28,7 @@ public class GenericDAOImpl<T, ID> implements GenericDAO<T, ID> {
     /**
      * <pre>EntityManager előkészítése.</pre>
      */
-    private EntityManager entityManager;
+    EntityManager entityManager;
 
     /**
      * <pre>A kiterjesztett DAO típusa.</pre>
@@ -60,6 +60,14 @@ public class GenericDAOImpl<T, ID> implements GenericDAO<T, ID> {
     public Optional<T> findById(ID id) {
         logger.info("Search " + type.getName() + " entity by ID: " + id);
         return Optional.of(entityManager.find(type, id));
+    }
+
+    @Override
+    public Optional<T> findBy(String entityParamName, String entityParam) {
+        logger.info("Search " + type.getName() + " entity by " + entityParamName + ": " + entityParam);
+        TypedQuery<T> query = entityManager.createQuery("SELECT c FROM " + type.getName() + " c WHERE c." + entityParamName + " LIKE :entityParam", type)
+                .setParameter("entityParam", entityParam);
+        return Optional.of(query.getSingleResult());
     }
 
     @Override
