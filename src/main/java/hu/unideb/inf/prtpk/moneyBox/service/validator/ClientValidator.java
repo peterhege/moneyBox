@@ -1,5 +1,6 @@
 package hu.unideb.inf.prtpk.moneyBox.service.validator;
 
+import hu.unideb.inf.prtpk.moneyBox.dao.api.ClientDAO;
 import hu.unideb.inf.prtpk.moneyBox.model.Client;
 import hu.unideb.inf.prtpk.moneyBox.utility.EntityManagerFactoryUtil;
 import org.apache.commons.validator.routines.EmailValidator;
@@ -15,6 +16,11 @@ import java.util.List;
 public class ClientValidator implements Validator<Client> {
 
     /**
+     * Ügyfélkezelő DAO.
+     */
+    private ClientDAO clientDAO;
+
+    /**
      * <pre>LoggerFactory a logoláshoz.</pre>
      */
     private static Logger logger = LoggerFactory.getLogger(EntityManagerFactoryUtil.class);
@@ -23,6 +29,15 @@ public class ClientValidator implements Validator<Client> {
      * Hibák listája.
      */
     private List<ErrorEnum> errorList;
+
+    /**
+     * <pre>Konstruktor.</pre>
+     *
+     * @param clientDAO {@link ClientDAO}
+     */
+    public ClientValidator(ClientDAO clientDAO) {
+        this.clientDAO = clientDAO;
+    }
 
     /**
      * <pre>Falhasználónév ellenőrzése.</pre>
@@ -64,9 +79,30 @@ public class ClientValidator implements Validator<Client> {
      */
     private void emailIsValid(Client client) {
         logger.info("Validate Client email address");
-        if (!EmailValidator.getInstance().isValid(client.getEmail())){
+        if (!EmailValidator.getInstance().isValid(client.getEmail())) {
             errorList.add(ErrorEnum.INVALID_EMAIL);
             logger.warn("Client email is invalid! " + client.getEmail());
+        }
+    }
+
+    /**
+     * <pre>Annak vizsgálata, hogy létezik-e már ilyen ügyfél.</pre>
+     * <ul>
+     * <li>Létezik ilyen felhasználónév</li>
+     * <li>Létezik ilyen e-mail cím</li>
+     * </ul>
+     *
+     * @param client {@link Client}
+     */
+    private void clientIsExist(Client client) {
+        logger.info("Validate Client is exist");
+        if (clientDAO.findByEmail(client.getEmail()).isPresent()) {
+            errorList.add(ErrorEnum.EXIST_EMAIL);
+            logger.warn("E-mail is already exist!");
+        }
+        if (clientDAO.findByName(client.getClientName()).isPresent()) {
+            errorList.add(ErrorEnum.EXIST_USERNAME);
+            logger.warn("Username is already exist!");
         }
     }
 
@@ -78,6 +114,7 @@ public class ClientValidator implements Validator<Client> {
         nameIsValid(client);
         passwordIsValid(client);
         emailIsValid(client);
+        clientIsExist(client);
 
         return errorList;
     }

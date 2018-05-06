@@ -9,5 +9,9 @@ public enum ErrorEnum {
     /** Túl rövid jelszó. */
     SHORT_PASSWORD,
     /** Hibás e-mail cím. */
-    INVALID_EMAIL
+    INVALID_EMAIL,
+    /** Az e-mail cím már foglalt. */
+    EXIST_EMAIL,
+    /** A felhasználónév már foglalt. */
+    EXIST_USERNAME
 }
