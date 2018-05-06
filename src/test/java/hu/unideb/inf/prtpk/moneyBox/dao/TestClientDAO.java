@@ -9,6 +9,7 @@ import org.junit.*;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
+import javax.xml.transform.stream.StreamResult;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -73,6 +74,36 @@ public class TestClientDAO {
         Long id = createdClient.getId();
 
         Client foundClient = clientDAO.findById(id).get();
+
+        assertEquals(createdClient, foundClient);
+
+        clearAllTable();
+    }
+
+    @Test
+    public void testFindByName() {
+        clientDAO.persist(user);
+        List<Client> clients = clientDAO.getAll();
+
+        Client createdClient = clients.get(0);
+        String name = createdClient.getClientName();
+
+        Client foundClient = clientDAO.findByName(name).get();
+
+        assertEquals(createdClient, foundClient);
+
+        clearAllTable();
+    }
+
+    @Test
+    public void testFindByEmail() {
+        clientDAO.persist(user);
+        List<Client> clients = clientDAO.getAll();
+
+        Client createdClient = clients.get(0);
+        String email = createdClient.getEmail();
+
+        Client foundClient = clientDAO.findByEmail(email).get();
 
         assertEquals(createdClient, foundClient);
 
