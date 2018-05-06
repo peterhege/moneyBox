@@ -5,6 +5,7 @@ import hu.unideb.inf.prtpk.moneyBox.utility.EntityManagerFactoryUtil;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.Optional;
@@ -28,7 +29,7 @@ public class GenericDAOImpl<T, ID> implements GenericDAO<T, ID> {
     /**
      * <pre>EntityManager előkészítése.</pre>
      */
-    EntityManager entityManager;
+    private EntityManager entityManager;
 
     /**
      * <pre>A kiterjesztett DAO típusa.</pre>
@@ -63,11 +64,18 @@ public class GenericDAOImpl<T, ID> implements GenericDAO<T, ID> {
     }
 
     @Override
-    public Optional<T> findBy(String entityParamName, String entityParam) {
+    public Optional<T> findBy(String entityParamName, String entityParam){
         logger.info("Search " + type.getName() + " entity by " + entityParamName + ": " + entityParam);
-        TypedQuery<T> query = entityManager.createQuery("SELECT c FROM " + type.getName() + " c WHERE c." + entityParamName + " LIKE :entityParam", type)
-                .setParameter("entityParam", entityParam);
-        return Optional.of(query.getSingleResult());
+        try{
+            TypedQuery<T> query = entityManager.createQuery("SELECT c FROM " + type.getName() + " c WHERE c." + entityParamName + " LIKE :entityParam", type).setParameter("entityParam", entityParam);
+            return Optional.of(query.getSingleResult());
+        }
+        catch (NoResultException e){
+            logger.info("The " + type.getName() + " doesn't exist");
+            return Optional.empty();
+        }
+
+
     }
 
     @Override
