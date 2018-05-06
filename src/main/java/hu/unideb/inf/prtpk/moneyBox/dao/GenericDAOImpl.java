@@ -91,6 +91,14 @@ public class GenericDAOImpl<T, ID> implements GenericDAO<T, ID> {
     }
 
     @Override
+    public void merge(T entity) {
+        logger.info("Merge " + type.getName() + " entity:\n" + entity);
+        entityManager.getTransaction().begin();
+        entityManager.merge(entity);
+        entityManager.getTransaction().commit();
+    }
+
+    @Override
     public List<T> getAll() {
         logger.info("Search all " + type.getName() + " entity");
         TypedQuery<T> query = entityManager.createQuery("SELECT t FROM " + type.getName() + " t", type);
