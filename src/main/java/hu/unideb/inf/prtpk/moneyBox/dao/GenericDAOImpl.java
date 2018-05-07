@@ -53,7 +53,7 @@ public class GenericDAOImpl<T, ID> implements GenericDAO<T, ID> {
     public void persist(T entity) {
         logger.info("Persist " + type.getName() + " entity:\n" + entity);
         entityManager.getTransaction().begin();
-        entityManager.persist(entity);
+        entityManager.merge(entity);
         entityManager.getTransaction().commit();
     }
 

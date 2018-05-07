@@ -19,7 +19,7 @@ public class ProductDAOImpl extends GenericDAOImpl<Product, Long> implements Pro
     /**
      * <pre>Konstruktor, mely átadja az osztály típusát.</pre>
      */
-    ProductDAOImpl() {
+    public ProductDAOImpl() {
         super(Product.class);
     }
 }

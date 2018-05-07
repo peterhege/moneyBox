@@ -2,7 +2,7 @@ package hu.unideb.inf.prtpk.moneyBox.service.api;
 
 import hu.unideb.inf.prtpk.moneyBox.model.Client;
 import hu.unideb.inf.prtpk.moneyBox.model.Product;
-import hu.unideb.inf.prtpk.moneyBox.service.validator.ErrorEnum;
+import hu.unideb.inf.prtpk.moneyBox.service.validator.enums.ErrorEnum;
 
 import java.util.List;
 
@@ -30,7 +30,7 @@ public interface EntityService {
      * <pre>Ügyfél adatainak frissítése.</pre>
      *
      * @param client Friss adatokkal rendelkező {@link Client}
-     *               @return Hibák {@link ErrorEnum} listája.
+     * @return Hibák {@link ErrorEnum} listája.
      */
     List<ErrorEnum> updateClient(Client client);
 
@@ -39,6 +39,7 @@ public interface EntityService {
      *
      * @param client  {@link Client} entitás
      * @param product {@link Product} entitás
+     * @return Hibák {@link ErrorEnum} listája.
      */
-    void createAndAddProductToClient(Client client, Product product);
+    List<ErrorEnum> createAndAddProductToClient(Client client, Product product);
 }

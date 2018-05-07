@@ -1,8 +1,11 @@
 package hu.unideb.inf.prtpk.moneyBox.service;
 
 import hu.unideb.inf.prtpk.moneyBox.dao.ClientDAOImpl;
+import hu.unideb.inf.prtpk.moneyBox.dao.ProductDAOImpl;
 import hu.unideb.inf.prtpk.moneyBox.dao.api.ClientDAO;
+import hu.unideb.inf.prtpk.moneyBox.dao.api.ProductDAO;
 import hu.unideb.inf.prtpk.moneyBox.model.Client;
+import hu.unideb.inf.prtpk.moneyBox.model.Product;
 import hu.unideb.inf.prtpk.moneyBox.service.api.EntityService;
 import hu.unideb.inf.prtpk.moneyBox.utility.EntityManagerFactoryUtil;
 import org.junit.Test;
@@ -11,14 +14,14 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 
 public class TestEntityService {
     private EntityManager entityManager;
     private ClientDAO clientDAO = new ClientDAOImpl();
-    private EntityService entityService = new EntityServiceImpl(clientDAO);
+    private ProductDAO productDAO = new ProductDAOImpl();
+    private EntityService entityService = new EntityServiceImpl(clientDAO, productDAO);
     private Client user = new Client(
             "user",
             "password",
@@ -43,10 +46,16 @@ public class TestEntityService {
             "@mail.com"
     );
 
+    private Product product = new Product(
+            "Huawei Watch okosóra fém tokkal és fémháló szíjjal",
+            "https://edigital.hu/okosora/huawei-watch-okosora-fem-tokkal-es-femhalo-szijjal-p408376",
+            129990
+    );
+
     private void clearAllTable() {
         entityManager.getTransaction().begin();
-        entityManager.createQuery("DELETE FROM Client").executeUpdate();
         entityManager.createQuery("DELETE FROM Product").executeUpdate();
+        entityManager.createQuery("DELETE FROM Client").executeUpdate();
         entityManager.getTransaction().commit();
     }
 
@@ -141,6 +150,52 @@ public class TestEntityService {
         List<Client> clients = clientDAO.getAll();
 
         assertEquals(0, clients.size());
+
+        clearAllTable();
+    }
+
+    @Test
+    public void testUpdateInvalidClient() {
+        entityService.createClient(user);
+
+        Client client = clientDAO.findByName(user.getClientName()).get();
+        client.setClientName("a");
+        client.setPassword("a");
+        client.setEmail("a");
+        entityService.updateClient(client);
+
+        client = clientDAO.findById(client.getId()).get();
+
+        assertEquals(user, client);
+
+        clearAllTable();
+    }
+
+    @Test
+    public void testCreateProduct(){
+        entityService.createClient(user);
+        Client client = clientDAO.findByName(user.getClientName()).get();
+        entityService.createAndAddProductToClient(client, product);
+
+        List<Product> products = productDAO.getAll();
+
+        Product clientProduct = clientDAO.findById(client.getId()).get().getProducts().get(0);
+
+        assertEquals(1, products.size());
+        assertEquals(product, clientProduct);
+
+        clearAllTable();
+    }
+
+    @Test
+    public void testCreateProductToNotExistClient(){
+        Client phantomClient = user;
+        phantomClient.setId(1L);
+        entityService.createAndAddProductToClient(phantomClient, product);
+
+        List<Product> products = productDAO.getAll();
+
+        assertEquals(0, products.size());
 
         clearAllTable();
     }
