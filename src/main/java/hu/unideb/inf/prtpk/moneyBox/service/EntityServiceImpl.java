@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,7 +48,7 @@ public class EntityServiceImpl implements EntityService {
     @Override
     public List<ErrorEnum> createClient(Client client) {
         logger.info("Create Client");
-        List<ErrorEnum> errorList = validator.validate(client);
+        List<ErrorEnum> errorList = validator.validate(client, ValidateType.CREATE);
         if (errorList.size() == 0) clientDAO.persist(client);
         return errorList;
     }
@@ -65,8 +66,11 @@ public class EntityServiceImpl implements EntityService {
     }
 
     @Override
-    public void updateClient(Client client) {
-
+    public List<ErrorEnum> updateClient(Client client) {
+        logger.info("Update Client");
+        List<ErrorEnum> errorList = validator.validate(client, ValidateType.UPDATE);
+        if (errorList.size() == 0) clientDAO.merge(client);
+        return errorList;
     }
 
     @Override

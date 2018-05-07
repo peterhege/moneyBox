@@ -13,5 +13,7 @@ public enum ErrorEnum {
     /** Az e-mail cím már foglalt. */
     EXIST_EMAIL,
     /** A felhasználónév már foglalt. */
-    EXIST_USERNAME
+    EXIST_USERNAME,
+    /** Nem található az azonosító. */
+    NOT_EXIST_ID
 }

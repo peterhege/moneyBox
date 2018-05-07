@@ -12,8 +12,9 @@ public interface Validator<T> {
     /**
      * <pre>Entitás ellenőrzése.</pre>
      *
-     * @param t Entitás példánya
+     * @param t    Entitás példánya
+     * @param type Milyen műveletnél ellenőrzünk? {@link ValidateType}
      * @return Hibák listája.
      */
-    List<ErrorEnum> validate(T t);
+    List<ErrorEnum> validate(T t, ValidateType type);
 }

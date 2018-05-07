@@ -80,7 +80,7 @@ public class TestEntityService {
     }
 
     @Test
-    public void testCreateExistClient(){
+    public void testCreateExistClient() {
         entityService.createClient(user);
         entityService.createClient(user);
 
@@ -92,7 +92,7 @@ public class TestEntityService {
     }
 
     @Test
-    public void testRemoveClient(){
+    public void testRemoveClient() {
         entityService.createClient(user);
         Client client = clientDAO.findByName(user.getClientName()).get();
         entityService.removeClient(client.getId());
@@ -105,13 +105,38 @@ public class TestEntityService {
     }
 
     @Test
-    public void testRemoveNotExistClient(){
-        try{
+    public void testRemoveNotExistClient() {
+        try {
             entityService.removeClient(1L);
-        }
-        catch (EntityNotFoundException e){
+        } catch (EntityNotFoundException e) {
             System.out.println(e);
         }
+
+        List<Client> clients = clientDAO.getAll();
+
+        assertEquals(0, clients.size());
+
+        clearAllTable();
+    }
+
+    @Test
+    public void testUpdateClient() {
+        entityService.createClient(user);
+        Client updatableClient = clientDAO.findByName(user.getClientName()).get();
+        updatableClient.setClientName("mrcsempe");
+        entityService.updateClient(updatableClient);
+        Client updatedClient = clientDAO.findById(updatableClient.getId()).get();
+
+        assertEquals(updatableClient, updatedClient);
+
+        clearAllTable();
+    }
+
+    @Test
+    public void testUpdateNotExistClient(){
+        Client updatableClient = user;
+        updatableClient.setId(1L);
+        entityService.updateClient(updatableClient);
 
         List<Client> clients = clientDAO.getAll();
 

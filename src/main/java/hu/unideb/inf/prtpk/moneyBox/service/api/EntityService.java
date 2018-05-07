@@ -15,7 +15,7 @@ public interface EntityService {
      * <pre>Ügyfél felvétele a rendszerbe.</pre>
      *
      * @param client {@link Client} entitás
-     * @return Hibák listája
+     * @return Hibák {@link ErrorEnum} listája.
      */
     List<ErrorEnum> createClient(Client client);
 
@@ -29,9 +29,10 @@ public interface EntityService {
     /**
      * <pre>Ügyfél adatainak frissítése.</pre>
      *
-     * @param client {@link Client} entitás
+     * @param client Friss adatokkal rendelkező {@link Client}
+     *               @return Hibák {@link ErrorEnum} listája.
      */
-    void updateClient(Client client);
+    List<ErrorEnum> updateClient(Client client);
 
     /**
      * <pre>Termék hozzáadása egy Ügyfélhez, majd felvétel a rendszerbe.</pre>
