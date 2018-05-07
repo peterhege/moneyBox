@@ -28,7 +28,7 @@ public class Product {
     /**
      * Egy termék ára.
      */
-    private int price;
+    private int price = 0;
 
     /**
      * Egy termékre félretett összeg, alapértelmezetten 0.

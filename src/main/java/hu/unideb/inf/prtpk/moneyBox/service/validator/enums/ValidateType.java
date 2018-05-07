@@ -1,4 +1,4 @@
-package hu.unideb.inf.prtpk.moneyBox.service.validator;
+package hu.unideb.inf.prtpk.moneyBox.service.validator.enums;
 
 /**
  * <pre>Validálás típusa.</pre>

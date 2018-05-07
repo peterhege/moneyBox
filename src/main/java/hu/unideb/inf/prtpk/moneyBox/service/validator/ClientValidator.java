@@ -2,6 +2,8 @@ package hu.unideb.inf.prtpk.moneyBox.service.validator;
 
 import hu.unideb.inf.prtpk.moneyBox.dao.api.ClientDAO;
 import hu.unideb.inf.prtpk.moneyBox.model.Client;
+import hu.unideb.inf.prtpk.moneyBox.service.validator.api.Validator;
+import hu.unideb.inf.prtpk.moneyBox.service.validator.enums.*;
 import hu.unideb.inf.prtpk.moneyBox.utility.EntityManagerFactoryUtil;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.slf4j.Logger;
