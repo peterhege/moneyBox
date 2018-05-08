@@ -53,8 +53,9 @@ public class ClientValidator implements Validator<Client> {
      * </ul>
      */
     private void nameIsValid() {
-        logger.info("Validate Client username");
-        if (client.getClientName().length() <= 3) {
+        String name = client.getClientName();
+        logger.info("Validate Client username: " + name);
+        if (name.length() <= 3) {
             errorList.add(ErrorEnum.SHORT_NAME);
             logger.warn("Client username is too short: " + client.getClientName().length());
         }

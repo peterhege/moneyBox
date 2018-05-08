@@ -53,7 +53,7 @@ public class GenericDAOImpl<T, ID> implements GenericDAO<T, ID> {
     public void persist(T entity) {
         logger.info("Persist " + type.getName() + " entity:\n" + entity);
         entityManager.getTransaction().begin();
-        entityManager.merge(entity);
+        entityManager.persist(entity);
         entityManager.getTransaction().commit();
     }
 
@@ -95,6 +95,14 @@ public class GenericDAOImpl<T, ID> implements GenericDAO<T, ID> {
         logger.info("Merge " + type.getName() + " entity:\n" + entity);
         entityManager.getTransaction().begin();
         entityManager.merge(entity);
+        entityManager.getTransaction().commit();
+    }
+
+    @Override
+    public void refresh(T entity) {
+        logger.info("Refresh " + type.getName() + " entity:\n" + entity);
+        entityManager.getTransaction().begin();
+        entityManager.refresh(entity);
         entityManager.getTransaction().commit();
     }
 

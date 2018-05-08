@@ -68,6 +68,13 @@ public interface GenericDAO<T, ID> {
     void merge(T entity);
 
     /**
+     * <pre>Entitás adatainak frissítése.</pre>
+     *
+     * @param entity Entitás példánya
+     */
+    void refresh(T entity);
+
+    /**
      * <pre>Az összes adatbázisbeli T entitás listázása.</pre>
      * <code class="example-code">
      * Long id = ...;<br>

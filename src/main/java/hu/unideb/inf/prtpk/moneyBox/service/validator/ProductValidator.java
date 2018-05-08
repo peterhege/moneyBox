@@ -13,6 +13,9 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Termékek adatainak ellenőrzése.
+ */
 public class ProductValidator implements Validator<Product> {
     /**
      * Termékkezelő DAO.
@@ -42,7 +45,8 @@ public class ProductValidator implements Validator<Product> {
     /**
      * <pre>Konstruktor.</pre>
      *
-     * @param productDAO {@link ProductDAO}
+     * @param clientDAO  Az ügyfeleket kezelő {@link ClientDAO} példánya
+     * @param productDAO A termékeket kezelő {@link ProductDAO} példánya
      */
     public ProductValidator(ProductDAO productDAO, ClientDAO clientDAO) {
         this.productDAO = productDAO;

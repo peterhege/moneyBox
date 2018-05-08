@@ -5,8 +5,7 @@ import hu.unideb.inf.prtpk.moneyBox.model.*;
 import hu.unideb.inf.prtpk.moneyBox.service.validator.*;
 import hu.unideb.inf.prtpk.moneyBox.service.api.EntityService;
 import hu.unideb.inf.prtpk.moneyBox.service.validator.api.Validator;
-import hu.unideb.inf.prtpk.moneyBox.service.validator.enums.ErrorEnum;
-import hu.unideb.inf.prtpk.moneyBox.service.validator.enums.ValidateType;
+import hu.unideb.inf.prtpk.moneyBox.service.validator.enums.*;
 import hu.unideb.inf.prtpk.moneyBox.utility.EntityManagerFactoryUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,7 +50,8 @@ public class EntityServiceImpl implements EntityService {
     /**
      * <pre>Konstruktor.</pre>
      *
-     * @param clientDAO Az ügyfeleket kezelő DAO
+     * @param clientDAO  Az ügyfeleket kezelő {@link ClientDAO} példánya
+     * @param productDAO A termékeket kezelő {@link ProductDAO} példánya
      */
     EntityServiceImpl(ClientDAO clientDAO, ProductDAO productDAO) {
         this.clientDAO = clientDAO;
@@ -84,7 +84,7 @@ public class EntityServiceImpl implements EntityService {
     public List<ErrorEnum> updateClient(Client client) {
         logger.info("Update Client");
         List<ErrorEnum> errorList = clientValidator.validate(client, ValidateType.UPDATE);
-        if (errorList.size() == 0) clientDAO.merge(client);
+        if (errorList.size() == 0) clientDAO.refresh(client);
 
         return errorList;
     }
@@ -95,8 +95,8 @@ public class EntityServiceImpl implements EntityService {
         client.addProduct(product);
         product.setClient(client);
         List<ErrorEnum> errorList = productValidator.validate(product, ValidateType.CREATE);
-        if (errorList.size() == 0) productDAO.persist(product);
+        if (errorList.size() == 0) productDAO.merge(product);
 
-        return errorList;
+        return new ArrayList<>();
     }
 }

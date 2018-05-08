@@ -142,7 +142,7 @@ public class TestEntityService {
     }
 
     @Test
-    public void testUpdateNotExistClient(){
+    public void testUpdateNotExistClient() {
         Client updatableClient = user;
         updatableClient.setId(1L);
         entityService.updateClient(updatableClient);
@@ -159,36 +159,33 @@ public class TestEntityService {
         entityService.createClient(user);
 
         Client client = clientDAO.findByName(user.getClientName()).get();
-        client.setClientName("a");
+        client.setClientName("b");
         client.setPassword("a");
         client.setEmail("a");
         entityService.updateClient(client);
 
-        client = clientDAO.findById(client.getId()).get();
+        Client clientX = clientDAO.findById(client.getId()).get();
 
-        assertEquals(user, client);
+        assertEquals(user, clientX);
 
         clearAllTable();
     }
 
     @Test
-    public void testCreateProduct(){
+    public void testCreateProduct() {
         entityService.createClient(user);
-        Client client = clientDAO.findByName(user.getClientName()).get();
-        entityService.createAndAddProductToClient(client, product);
+        entityService.createAndAddProductToClient(user, product);
 
         List<Product> products = productDAO.getAll();
 
-        Product clientProduct = clientDAO.findById(client.getId()).get().getProducts().get(0);
-
         assertEquals(1, products.size());
-        assertEquals(product, clientProduct);
+        assertEquals(product, user.getProducts().get(0));
 
         clearAllTable();
     }
 
     @Test
-    public void testCreateProductToNotExistClient(){
+    public void testCreateProductToNotExistClient() {
         Client phantomClient = user;
         phantomClient.setId(1L);
         entityService.createAndAddProductToClient(phantomClient, product);

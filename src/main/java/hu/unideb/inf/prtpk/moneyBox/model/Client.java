@@ -38,7 +38,7 @@ public class Client {
      *
      * @see Product
      */
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "client")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "client")
     private List<Product> products;
 
     /**
