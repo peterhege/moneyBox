@@ -4,8 +4,9 @@ import hu.unideb.inf.prtpk.moneyBox.dao.api.*;
 import hu.unideb.inf.prtpk.moneyBox.model.*;
 import hu.unideb.inf.prtpk.moneyBox.service.validator.*;
 import hu.unideb.inf.prtpk.moneyBox.service.api.EntityService;
+import hu.unideb.inf.prtpk.moneyBox.service.validator.Error;
 import hu.unideb.inf.prtpk.moneyBox.service.validator.api.Validator;
-import hu.unideb.inf.prtpk.moneyBox.service.validator.enums.*;
+import hu.unideb.inf.prtpk.moneyBox.service.validator.enums.ValidateType;
 import hu.unideb.inf.prtpk.moneyBox.utility.EntityManagerFactoryUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,9 +62,9 @@ public class EntityServiceImpl implements EntityService {
     }
 
     @Override
-    public List<ErrorEnum> createClient(Client client) {
+    public List<Error> createClient(Client client) {
         logger.info("Create Client");
-        List<ErrorEnum> errorList = clientValidator.validate(client, ValidateType.CREATE);
+        List<Error> errorList = clientValidator.validate(client, ValidateType.CREATE);
         if (errorList.size() == 0) clientDAO.persist(client);
         return errorList;
     }
@@ -81,20 +82,20 @@ public class EntityServiceImpl implements EntityService {
     }
 
     @Override
-    public List<ErrorEnum> updateClient(Client client) {
+    public List<Error> updateClient(Client client) {
         logger.info("Update Client");
-        List<ErrorEnum> errorList = clientValidator.validate(client, ValidateType.UPDATE);
+        List<Error> errorList = clientValidator.validate(client, ValidateType.UPDATE);
         if (errorList.size() == 0) clientDAO.refresh(client);
 
         return errorList;
     }
 
     @Override
-    public List<ErrorEnum> createAndAddProductToClient(Client client, Product product) {
+    public List<Error> createAndAddProductToClient(Client client, Product product) {
         logger.info("Create Product");
         client.addProduct(product);
         product.setClient(client);
-        List<ErrorEnum> errorList = productValidator.validate(product, ValidateType.CREATE);
+        List<Error> errorList = productValidator.validate(product, ValidateType.CREATE);
         if (errorList.size() == 0) productDAO.merge(product);
 
         return new ArrayList<>();

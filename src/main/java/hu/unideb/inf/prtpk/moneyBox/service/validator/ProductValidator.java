@@ -35,7 +35,7 @@ public class ProductValidator implements Validator<Product> {
     /**
      * Hibák listája.
      */
-    private List<ErrorEnum> errorList;
+    private List<Error> errorList;
 
     /**
      * Vizsgálandó {@link Product}.
@@ -61,8 +61,11 @@ public class ProductValidator implements Validator<Product> {
      */
     private void nameIsValid() {
         logger.info("Validate Product name");
-        if (product.getName().length() <= 3) {
-            errorList.add(ErrorEnum.SHORT_NAME);
+        if (product.getName().length() < 3) {
+            errorList.add(new Error(
+                    "productName",
+                    "A termék neve legalább három karatker kell hogy legyen."
+            ));
             logger.warn("Product name is too short: " + product.getName().length());
         }
     }
@@ -79,7 +82,10 @@ public class ProductValidator implements Validator<Product> {
         logger.info("Validate Product url");
         String url = product.getUrl();
         if (!url.equals("") && !UrlValidator.getInstance().isValid(url)) {
-            errorList.add(ErrorEnum.INVALID_URL);
+            errorList.add(new Error(
+                    "url",
+                    "Helytelen webcím."
+            ));
             logger.warn("Product url [" + url + "] is invalid!");
         }
     }
@@ -95,10 +101,16 @@ public class ProductValidator implements Validator<Product> {
         logger.info("Validate Product price");
         int price = product.getPrice();
         if (price == 0) {
-            errorList.add(ErrorEnum.NOT_EXIST_PRICE);
+            errorList.add(new Error(
+                    "price",
+                    "A termék árát kötelező megadni."
+            ));
             logger.warn("Product price isn't exist!");
         } else if (price < 0) {
-            errorList.add(ErrorEnum.INVALID_PRICE);
+            errorList.add(new Error(
+                    "price",
+                    "Az összeg nem lehet kisebb nullánál."
+            ));
             logger.warn("Product price [" + price + "] is invalid!");
         }
     }
@@ -113,7 +125,10 @@ public class ProductValidator implements Validator<Product> {
         logger.info("Validate Saved Amount");
         int savedAmount = product.getSavedAmount();
         if (savedAmount < 0) {
-            errorList.add(ErrorEnum.INVALID_PRICE);
+            errorList.add(new Error(
+                    "savedAmount",
+                    "Az összeg nem lehet kisebb nullánál."
+            ));
             logger.warn("Product saved amount [" + savedAmount + "] is invalid!");
         }
     }
@@ -124,7 +139,10 @@ public class ProductValidator implements Validator<Product> {
     private void clientIsExist() {
         logger.info("Validate Client is exist");
         if (!clientDAO.findById(product.getClient().getId()).isPresent()) {
-            errorList.add(ErrorEnum.NOT_EXIST_ID);
+            errorList.add(new Error(
+                    "id",
+                    "A felhasználó nem létezik."
+            ));
             logger.warn("Product Client not exist!");
         }
     }
@@ -135,7 +153,10 @@ public class ProductValidator implements Validator<Product> {
     private void productIdIsNotExist() {
         logger.info("Validate Product ID is exist");
         if (!productDAO.findById(product.getId()).isPresent()) {
-            errorList.add(ErrorEnum.NOT_EXIST_ID);
+            errorList.add(new Error(
+                    "id",
+                    "A termék nem létezik."
+            ));
             logger.warn("ID not found!");
         }
     }
@@ -152,7 +173,7 @@ public class ProductValidator implements Validator<Product> {
     }
 
     @Override
-    public List<ErrorEnum> validate(Product product, ValidateType type) {
+    public List<Error> validate(Product product, ValidateType type) {
         this.errorList = new ArrayList<>();
         this.product = product;
 

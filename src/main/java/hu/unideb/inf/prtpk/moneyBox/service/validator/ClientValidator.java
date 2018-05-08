@@ -30,7 +30,7 @@ public class ClientValidator implements Validator<Client> {
     /**
      * Hibák listája.
      */
-    private List<ErrorEnum> errorList;
+    private List<Error> errorList;
 
     /**
      * Vizsgálandó {@link Client}.
@@ -55,8 +55,11 @@ public class ClientValidator implements Validator<Client> {
     private void nameIsValid() {
         String name = client.getClientName();
         logger.info("Validate Client username: " + name);
-        if (name.length() <= 3) {
-            errorList.add(ErrorEnum.SHORT_NAME);
+        if (name.length() < 3) {
+            errorList.add(new Error(
+                    "userName",
+                    "A felhasználónévnek legalább három karakternek kell lennie."
+            ));
             logger.warn("Client username is too short: " + client.getClientName().length());
         }
     }
@@ -69,8 +72,11 @@ public class ClientValidator implements Validator<Client> {
      */
     private void passwordIsValid() {
         logger.info("Validate Client password");
-        if (client.getPassword().length() <= 3) {
-            errorList.add(ErrorEnum.SHORT_PASSWORD);
+        if (client.getPassword().length() < 3) {
+            errorList.add(new Error(
+                    "password",
+                    "A jelszónak legalább három karakternek kell lennie."
+            ));
             logger.warn("Client password is too short: " + client.getPassword().length());
         }
     }
@@ -83,7 +89,10 @@ public class ClientValidator implements Validator<Client> {
     private void emailIsValid() {
         logger.info("Validate Client email address");
         if (!EmailValidator.getInstance().isValid(client.getEmail())) {
-            errorList.add(ErrorEnum.INVALID_EMAIL);
+            errorList.add(new Error(
+                    "email",
+                    "Helytelen e-mail cím."
+            ));
             logger.warn("Client email is invalid! " + client.getEmail());
         }
     }
@@ -98,11 +107,17 @@ public class ClientValidator implements Validator<Client> {
     private void clientIsExist() {
         logger.info("Validate Client is exist");
         if (clientDAO.findByEmail(client.getEmail()).isPresent()) {
-            errorList.add(ErrorEnum.EXIST_EMAIL);
+            errorList.add(new Error(
+                    "email",
+                    "Az e-mail cím már foglalt."
+            ));
             logger.warn("E-mail is already exist!");
         }
         if (clientDAO.findByName(client.getClientName()).isPresent()) {
-            errorList.add(ErrorEnum.EXIST_USERNAME);
+            errorList.add(new Error(
+                    "userName",
+                    "A felhasználónév már foglalt."
+            ));
             logger.warn("Username is already exist!");
         }
     }
@@ -113,13 +128,16 @@ public class ClientValidator implements Validator<Client> {
     private void clientIdIsNotExist() {
         logger.info("Validate Client ID is exist");
         if (!clientDAO.findById(client.getId()).isPresent()) {
-            errorList.add(ErrorEnum.NOT_EXIST_ID);
+            errorList.add(new Error(
+                    "id",
+                    "A felhasználó nem található."
+            ));
             logger.warn("ID not found!");
         }
     }
 
     @Override
-    public List<ErrorEnum> validate(Client client, ValidateType type) {
+    public List<Error> validate(Client client, ValidateType type) {
         logger.info("Validate Client");
         this.client = client;
         this.errorList = new ArrayList<>();
