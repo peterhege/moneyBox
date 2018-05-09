@@ -1,156 +1,142 @@
 package hu.unideb.inf.prtpk.moneyBox.controller;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.LongProperty;
-import javafx.beans.property.StringProperty;
+import hu.unideb.inf.prtpk.moneyBox.model.Client;
+
+import javax.faces.bean.ManagedBean;
 
 /**
- * Adatbázisbeli Termékeket leíró osztály.
+ * JSF Termékeket leíró osztály.
  */
-public class ProductViewModel {
+@ManagedBean
+public class ProductView {
 
     /**
      * Egy termék automatikusan generált azonosítója.
      */
-    private LongProperty id;
+    private Long id;
 
     /**
      * Egy termék megnevezése.
      */
-    private StringProperty name;
+    private String name;
 
     /**
      * Egy termék url címe (ahol meg lehet vásárolni).
      */
-    private StringProperty url;
+    private String url;
 
     /**
      * Egy termék ára.
      */
-    private IntegerProperty price;
+    private int price = 0;
 
     /**
      * Egy termékre félretett összeg, alapértelmezetten 0.
      */
-    private IntegerProperty savedAmount;
+    private int savedAmount = 0;
 
     /**
      * Egy termékhez tartozó felhasználó (entitás).
-     * @see ClientViewModel
+     * @see Client
      */
-    private ClientViewModel client;
+    private ClientView client;
 
     /**
      * Üres konstruktor.
      */
-    public ProductViewModel() {
-    }
-
-    /**
-     * <pre>Konstruktor, ha van félretett összeg.</pre>
-     *
-     * @param name          {@link #name}
-     * @param url           {@link #url}
-     * @param price         {@link #price}
-     * @param savedAmount   {@link #savedAmount}
-     */
-    public ProductViewModel(StringProperty name, StringProperty url, IntegerProperty price, IntegerProperty savedAmount) {
-        this.name = name;
-        this.url = url;
-        this.price = price;
-        this.savedAmount = savedAmount;
+    public ProductView() {
     }
 
     /**
      * @return {@link #id}
      */
-    public LongProperty getId() {
+    public Long getId() {
         return id;
     }
 
     /**
      * @param id {@link #id}
      */
-    public void setId(LongProperty id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
     /**
      * @return {@link #name}
      */
-    public StringProperty getName() {
+    public String getName() {
         return name;
     }
 
     /**
      * @param name {@link #name}
      */
-    public void setName(StringProperty name) {
+    public void setName(String name) {
         this.name = name;
     }
 
     /**
      * @return {@link #url}
      */
-    public StringProperty getUrl() {
+    public String getUrl() {
         return url;
     }
 
     /**
      * @param url {@link #url}
      */
-    public void setUrl(StringProperty url) {
+    public void setUrl(String url) {
         this.url = url;
     }
 
     /**
      * @return {@link #price}
      */
-    public IntegerProperty getPrice() {
+    public int getPrice() {
         return price;
     }
 
     /**
      * @param price {@link #price}
      */
-    public void setPrice(IntegerProperty price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
     /**
      * @return {@link #savedAmount}
      */
-    public IntegerProperty getSavedAmount() {
+    public int getSavedAmount() {
         return savedAmount;
     }
 
     /**
      * @param savedAmount {@link #savedAmount}
      */
-    public void setSavedAmount(IntegerProperty savedAmount) {
+    public void setSavedAmount(int savedAmount) {
         this.savedAmount = savedAmount;
     }
 
     /**
      * @return {@link #client}
      */
-    public ClientViewModel getClient() {
+    public ClientView getClient() {
         return client;
     }
 
     /**
      * @param client {@link #client}
      */
-    public void setClient(ClientViewModel client) {
+    public void setClient(ClientView client) {
         this.client = client;
     }
 
     @Override
     public String toString() {
-        return "ProductViewModel{" +
+        return "Product{" +
                 "id=" + id +
-                ", name=" + name +
-                ", url=" + url +
+                ", name='" + name + '\'' +
+                ", url='" + url + '\'' +
                 ", price=" + price +
                 ", savedAmount=" + savedAmount +
                 '}';
