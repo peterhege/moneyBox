@@ -1,4 +1,4 @@
-package hu.unideb.inf.prtpk.moneyBox.controller;
+package hu.unideb.inf.prtpk.moneyBox.controller.model;
 
 import hu.unideb.inf.prtpk.moneyBox.model.Product;
 

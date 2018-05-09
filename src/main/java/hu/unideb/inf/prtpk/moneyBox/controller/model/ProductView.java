@@ -1,5 +1,6 @@
-package hu.unideb.inf.prtpk.moneyBox.controller;
+package hu.unideb.inf.prtpk.moneyBox.controller.model;
 
+import hu.unideb.inf.prtpk.moneyBox.controller.model.ClientView;
 import hu.unideb.inf.prtpk.moneyBox.model.Client;
 
 import javax.faces.bean.ManagedBean;
