@@ -4,6 +4,9 @@ import hu.unideb.inf.prtpk.moneyBox.controller.model.ClientView;
 import hu.unideb.inf.prtpk.moneyBox.model.Client;
 import org.modelmapper.ModelMapper;
 
+/**
+ * <pre>A Client entitás convertálása a Service és View között.</pre>
+ */
 public class ClientConverter implements Converter<ClientView, Client> {
 
     /**
