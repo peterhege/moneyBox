@@ -1,16 +1,20 @@
 package hu.unideb.inf.prtpk.moneyBox.controller;
 
+import hu.unideb.inf.prtpk.moneyBox.Error.ErrorField;
 import hu.unideb.inf.prtpk.moneyBox.model.Client;
 import hu.unideb.inf.prtpk.moneyBox.service.EntityServiceImpl;
 import hu.unideb.inf.prtpk.moneyBox.service.api.EntityService;
 import hu.unideb.inf.prtpk.moneyBox.Error.Error;
-import hu.unideb.inf.prtpk.moneyBox.utility.SessionUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.servlet.http.HttpSession;
+import javax.faces.context.FacesContext;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * <pre>Bejelenetkezést végző osztály.</pre>
@@ -20,9 +24,19 @@ import java.util.Optional;
 public class ClientController {
 
     /**
+     * <pre>LoggerFactory a logoláshoz.</pre>
+     */
+    private static Logger logger = LoggerFactory.getLogger(ClientController.class);
+
+    /**
      * Felhasználónév.
      */
     private String userName;
+
+    /**
+     * Felhasználónév hibái.
+     */
+    private List<String> userNameErrors = new ArrayList<>();
 
     /**
      * Felhasználó e-mail címe.
@@ -30,9 +44,19 @@ public class ClientController {
     private String email;
 
     /**
+     * e-mail cím hibái.
+     */
+    private List<String> emailErrors = new ArrayList<>();
+
+    /**
      * Jelszó.
      */
     private String password;
+
+    /**
+     * Jelszó hibái.
+     */
+    private List<String> passwordErrors = new ArrayList<>();
 
     /**
      * Felhasználó entitása.
@@ -42,12 +66,12 @@ public class ClientController {
     /**
      * Bejelentkezéskor fellépő hibák listája.
      */
-    private List<String> loginErrors;
+    private List<String> loginErrors = new ArrayList<>();
 
     /**
-     * Regisztrációkor fellépő hibák listája;
+     * Regisztrációkor fellépő hibák listája.
      */
-    private List<String> regErrors;
+    private List<String> regErrors = new ArrayList<>();
 
     /**
      * Entitások kezelése.
@@ -55,9 +79,15 @@ public class ClientController {
     private EntityService entityService = new EntityServiceImpl();
 
     /**
-     * Session kezelése.
+     * Hibalisták ürítése.
      */
-    private HttpSession session = SessionUtil.getSession();
+    private void clearErrrors() {
+        loginErrors = new ArrayList<>();
+        regErrors = new ArrayList<>();
+        userNameErrors = new ArrayList<>();
+        passwordErrors = new ArrayList<>();
+        emailErrors = new ArrayList<>();
+    }
 
     /**
      * @return {@link #userName}
@@ -116,6 +146,48 @@ public class ClientController {
     }
 
     /**
+     * @return {@link #userNameErrors}
+     */
+    public List<String> getUserNameErrors() {
+        return userNameErrors;
+    }
+
+    /**
+     * @param userNameErrors {@link #userNameErrors}
+     */
+    public void setUserNameErrors(List<String> userNameErrors) {
+        this.userNameErrors = userNameErrors;
+    }
+
+    /**
+     * @return {@link #emailErrors}
+     */
+    public List<String> getEmailErrors() {
+        return emailErrors;
+    }
+
+    /**
+     * @param emailErrors {@link #emailErrors}
+     */
+    public void setEmailErrors(List<String> emailErrors) {
+        this.emailErrors = emailErrors;
+    }
+
+    /**
+     * @return {@link #passwordErrors}
+     */
+    public List<String> getPasswordErrros() {
+        return passwordErrors;
+    }
+
+    /**
+     * @param passwordErrors {@link #passwordErrors}
+     */
+    public void setPasswordErrros(List<String> passwordErrors) {
+        this.passwordErrors = passwordErrors;
+    }
+
+    /**
      * @return {@link #loginErrors}
      */
     public List<String> getLoginErrors() {
@@ -149,12 +221,12 @@ public class ClientController {
      * @return Ide navigál az oldal.
      */
     public String login() {
+        clearErrrors();
         Optional<Client> optionalClient = entityService.findClientByNameAndPass(userName, password);
-        if (optionalClient.isPresent()){
+        if (optionalClient.isPresent()) {
+            logger.debug("Find the user!");
             this.client = optionalClient.get();
-            this.loginErrors = null;
-        }
-        else loginErrors.add("Hibás felhasználónév vagy jelszó.");
+        } else loginErrors.add("Hibás felhasználónév vagy jelszó.");
         return null;
     }
 
@@ -174,11 +246,17 @@ public class ClientController {
      * @return Ide navigál az oldal.
      */
     public String registration() {
+        clearErrrors();
         Client client = new Client(userName, password, email);
         List<Error> errorList = entityService.createClient(client);
-        if (errorList.size() == 0){
-            this.client = client;
-            this.regErrors = null;
+        if (errorList.size() == 0) this.client = client;
+        else {
+            logger.debug(errorList.toString());
+            this.userNameErrors = errorList.stream().filter(e -> e.getField().equals(ErrorField.USER_NAME)).map(Error::getMessage).collect(Collectors.toList());
+            this.passwordErrors = errorList.stream().filter(e -> e.getField().equals(ErrorField.PASSWORD)).map(Error::getMessage).collect(Collectors.toList());
+            this.emailErrors = errorList.stream().filter(e -> e.getField().equals(ErrorField.EMAIL)).map(Error::getMessage).collect(Collectors.toList());
+            this.regErrors = errorList.stream().filter(e -> e.getField().equals(ErrorField.CLIENT)).map(Error::getMessage).collect(Collectors.toList());
+            logger.debug(this.userNameErrors.toString());
         }
 
         return null;
