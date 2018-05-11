@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ import java.util.stream.Collectors;
 /**
  * <pre>Bejelenetkezést végző osztály.</pre>
  */
-@ManagedBean
+@ManagedBean(name = "clientController")
 @SessionScoped
 public class ClientController {
 

@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 @ManagedBean
 public class ProductController {
@@ -30,8 +31,6 @@ public class ProductController {
     private int price;
 
     private int savedAmount;
-
-    private boolean urlIsChecked = false;
 
     public String getUrl() {
         return url;
@@ -65,27 +64,18 @@ public class ProductController {
         this.savedAmount = savedAmount;
     }
 
-    public boolean isUrlIsChecked() {
-        return urlIsChecked;
-    }
-
-    public void setUrlIsChecked(boolean urlIsChecked) {
-        this.urlIsChecked = urlIsChecked;
-    }
-
     public String loadFromUrl() {
         logger.debug("Load from url.");
-        this.urlIsChecked = true;
         return "productUrlChecked";
     }
 
     public String createProduct() {
         logger.debug("Create Product");
-        HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-        Client client = (Client) session.getAttribute("client");
-        logger.debug(client.toString());
+        Map session = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+        logger.debug("Get client session.");
+        ClientController client = (ClientController) session.get("clientController");
         Product product = new Product(name, url, price);
-        entityService.createAndAddProductToClient(client, product);
+        entityService.createAndAddProductToClient(client.getClient(), product);
         return null;
     }
 }
