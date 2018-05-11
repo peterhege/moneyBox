@@ -1,5 +1,7 @@
 package hu.unideb.inf.prtpk.moneyBox.service.validator;
 
+import hu.unideb.inf.prtpk.moneyBox.Error.Error;
+import hu.unideb.inf.prtpk.moneyBox.Error.ErrorField;
 import hu.unideb.inf.prtpk.moneyBox.dao.api.ClientDAO;
 import hu.unideb.inf.prtpk.moneyBox.dao.api.ProductDAO;
 import hu.unideb.inf.prtpk.moneyBox.model.Product;
@@ -63,7 +65,7 @@ public class ProductValidator implements Validator<Product> {
         logger.info("Validate Product name");
         if (product.getName().length() < 3) {
             errorList.add(new Error(
-                    "productName",
+                    ErrorField.PRODUCT_NAME,
                     "A termék neve legalább három karatker kell hogy legyen."
             ));
             logger.warn("Product name is too short: " + product.getName().length());
@@ -83,7 +85,7 @@ public class ProductValidator implements Validator<Product> {
         String url = product.getUrl();
         if (!url.equals("") && !UrlValidator.getInstance().isValid(url)) {
             errorList.add(new Error(
-                    "url",
+                    ErrorField.URL,
                     "Helytelen webcím."
             ));
             logger.warn("Product url [" + url + "] is invalid!");
@@ -102,13 +104,13 @@ public class ProductValidator implements Validator<Product> {
         int price = product.getPrice();
         if (price == 0) {
             errorList.add(new Error(
-                    "price",
+                    ErrorField.PRICE,
                     "A termék árát kötelező megadni."
             ));
             logger.warn("Product price isn't exist!");
         } else if (price < 0) {
             errorList.add(new Error(
-                    "price",
+                    ErrorField.PRICE,
                     "Az összeg nem lehet kisebb nullánál."
             ));
             logger.warn("Product price [" + price + "] is invalid!");
@@ -126,7 +128,7 @@ public class ProductValidator implements Validator<Product> {
         int savedAmount = product.getSavedAmount();
         if (savedAmount < 0) {
             errorList.add(new Error(
-                    "savedAmount",
+                    ErrorField.SAVED_AMOUNT,
                     "Az összeg nem lehet kisebb nullánál."
             ));
             logger.warn("Product saved amount [" + savedAmount + "] is invalid!");
@@ -140,7 +142,7 @@ public class ProductValidator implements Validator<Product> {
         logger.info("Validate Client is exist");
         if (!clientDAO.findById(product.getClient().getId()).isPresent()) {
             errorList.add(new Error(
-                    "id",
+                    ErrorField.PRODUCT,
                     "A felhasználó nem létezik."
             ));
             logger.warn("Product Client not exist!");
@@ -154,7 +156,7 @@ public class ProductValidator implements Validator<Product> {
         logger.info("Validate Product ID is exist");
         if (!productDAO.findById(product.getId()).isPresent()) {
             errorList.add(new Error(
-                    "id",
+                    ErrorField.PRODUCT,
                     "A termék nem létezik."
             ));
             logger.warn("ID not found!");

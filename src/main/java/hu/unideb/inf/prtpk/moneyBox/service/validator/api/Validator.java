@@ -1,6 +1,6 @@
 package hu.unideb.inf.prtpk.moneyBox.service.validator.api;
 
-import hu.unideb.inf.prtpk.moneyBox.service.validator.Error;
+import hu.unideb.inf.prtpk.moneyBox.Error.Error;
 import hu.unideb.inf.prtpk.moneyBox.service.validator.enums.ValidateType;
 
 import java.util.List;

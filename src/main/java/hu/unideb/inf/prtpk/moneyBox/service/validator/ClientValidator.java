@@ -1,5 +1,7 @@
 package hu.unideb.inf.prtpk.moneyBox.service.validator;
 
+import hu.unideb.inf.prtpk.moneyBox.Error.Error;
+import hu.unideb.inf.prtpk.moneyBox.Error.ErrorField;
 import hu.unideb.inf.prtpk.moneyBox.dao.api.ClientDAO;
 import hu.unideb.inf.prtpk.moneyBox.model.Client;
 import hu.unideb.inf.prtpk.moneyBox.service.validator.api.Validator;
@@ -57,7 +59,7 @@ public class ClientValidator implements Validator<Client> {
         logger.info("Validate Client username: " + name);
         if (name.length() < 3) {
             errorList.add(new Error(
-                    "userName",
+                    ErrorField.USER_NAME,
                     "A felhasználónévnek legalább három karakternek kell lennie."
             ));
             logger.warn("Client username is too short: " + client.getClientName().length());
@@ -71,10 +73,10 @@ public class ClientValidator implements Validator<Client> {
      * </ul>
      */
     private void passwordIsValid() {
-        logger.info("Validate Client password");
+        logger.info("Validate Client password: " + client.getPassword());
         if (client.getPassword().length() < 3) {
             errorList.add(new Error(
-                    "password",
+                    ErrorField.PASSWORD,
                     "A jelszónak legalább három karakternek kell lennie."
             ));
             logger.warn("Client password is too short: " + client.getPassword().length());
@@ -90,7 +92,7 @@ public class ClientValidator implements Validator<Client> {
         logger.info("Validate Client email address");
         if (!EmailValidator.getInstance().isValid(client.getEmail())) {
             errorList.add(new Error(
-                    "email",
+                    ErrorField.EMAIL,
                     "Helytelen e-mail cím."
             ));
             logger.warn("Client email is invalid! " + client.getEmail());
@@ -108,14 +110,14 @@ public class ClientValidator implements Validator<Client> {
         logger.info("Validate Client is exist");
         if (clientDAO.findByEmail(client.getEmail()).isPresent()) {
             errorList.add(new Error(
-                    "email",
+                    ErrorField.EMAIL,
                     "Az e-mail cím már foglalt."
             ));
             logger.warn("E-mail is already exist!");
         }
         if (clientDAO.findByName(client.getClientName()).isPresent()) {
             errorList.add(new Error(
-                    "userName",
+                    ErrorField.USER_NAME,
                     "A felhasználónév már foglalt."
             ));
             logger.warn("Username is already exist!");
@@ -129,7 +131,7 @@ public class ClientValidator implements Validator<Client> {
         logger.info("Validate Client ID is exist");
         if (!clientDAO.findById(client.getId()).isPresent()) {
             errorList.add(new Error(
-                    "id",
+                    ErrorField.CLIENT,
                     "A felhasználó nem található."
             ));
             logger.warn("ID not found!");
