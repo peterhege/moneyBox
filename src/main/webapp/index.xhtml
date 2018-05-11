@@ -1,19 +1,101 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:b="http://bootsfaces.net/ui"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
-
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
-    <title>JSF 2.0 Hello World</title>
+    <title>MoneyBox</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300&amp;subset=latin-ext" rel="stylesheet"/>
+
 </h:head>
-<h:body>
-    <h2>JSF 2.0 Hello World Example - hello.xhtml</h2>
-    <h:form>
-        <h:inputText value="#{helloBean.name}"></h:inputText>
-        <h:commandButton value="Welcome Me" action="welcome"></h:commandButton>
-    </h:form>
+<h:body style="margin-top: 70px; font-family: 'Open Sans'">
+    <b:navBar brand="MoneyBox" style="text-transform: uppercase;" brandHref="#" inverse="true" fixed="top"
+              sticky="true">
+        <b:navbarLinks rendered="#{not empty clientController.client}">
+            <b:navLink value="Home" href="#"/>
+            <b:navLink value="Link" href="#"/>
+            <b:navLink value="Link" href="#"/>
+        </b:navbarLinks>
+
+        <h:form rendered="#{not empty clientController.client}">
+            <b:navbarLinks pull="right">
+                <li>
+                    <b:navCommandLink action="#{clientController.logout()}">
+                        <b:iconAwesome name="sign-out" styleClass="fa-fw"/>
+                        Kilépés
+                    </b:navCommandLink>
+                </li>
+            </b:navbarLinks>
+        </h:form>
+    </b:navBar>
+
+    <b:container>
+        <h:panelGroup rendered="#{empty clientController.client}">
+            <b:container>
+                <b:row>
+                    <div class="col-sm-6">
+                        <h:form styleClass="form-signin" prependId="false" style="width: 70%; margin: 0 auto;">
+                            <h2 class="form-signin-heading"
+                                style="text-align: center; text-transform: uppercase;">Belépés</h2>
+                            <b:inputText id="userName" placeholder="Felhasználónév"
+                                         value="#{clientController.userName}">
+                                <f:facet name="prepend">
+                                    <b:icon name="user"/>
+                                </f:facet>
+                            </b:inputText>
+                            <b:inputText id="password" placeholder="Jelszó" type="password">
+                                <f:facet name="prepend">
+                                    <b:iconAwesome name="key"/>
+                                </f:facet>
+                            </b:inputText>
+                            <b:commandButton look="primary btn-block" size="lg" action="#{clientController.login()}">
+                                <b:iconAwesome name="sign-in" styleClass="fa-fw"/>
+                                Belépés
+                            </b:commandButton>
+                        </h:form>
+                    </div>
+                    <div class="col-sm-6">
+                        <h:form styleClass="form-signin" prependId="false" style="width: 70%; margin: 0 auto;">
+                            <h2 class="form-signin-heading"
+                                style="text-align: center; text-transform: uppercase;">Regisztrálás</h2>
+                            <b:inputText id="regUserName" placeholder="Felhasználónév"
+                                         value="#{clientController.userName}">
+                                <f:facet name="prepend">
+                                    <b:icon name="user"/>
+                                </f:facet>
+                            </b:inputText>
+                            <b:inputText id="regEMail" placeholder="e-mail"
+                                         value="#{clientController.email}">
+                                <f:facet name="prepend">
+                                    <b:icon name="envelope"/>
+                                </f:facet>
+                            </b:inputText>
+                            <b:inputText id="regPassword" placeholder="Jelszó" type="password"
+                                         value="#{clientController.password}">
+                                <f:facet name="prepend">
+                                    <b:iconAwesome name="key"/>
+                                </f:facet>
+                            </b:inputText>
+                            <b:commandButton look="primary btn-block" size="lg"
+                                             action="#{clientController.registration()}">
+                                <b:iconAwesome name="sign-in" styleClass="fa-fw"/>
+                                Regisztálás
+                            </b:commandButton>
+                        </h:form>
+                    </div>
+                </b:row>
+            </b:container>
+        </h:panelGroup>
+        <h:panelGroup rendered="#{not empty clientController.client}">
+            <ui:insert name="content">
+                <div style="text-align: center">
+                    <h2>Hello <h:outputText value="#{clientController.client.getClientName()}"/>!</h2>
+                </div>
+            </ui:insert>
+        </h:panelGroup>
+    </b:container>
 </h:body>
 </html>
