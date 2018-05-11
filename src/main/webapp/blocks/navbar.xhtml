@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+<b:navBar brand="MoneyBox" style="text-transform: uppercase;" brandHref="/" inverse="true" fixed="top"
+          sticky="true">
+    <b:navbarLinks rendered="#{not empty clientController.client}">
+        <b:navLink value="Termékeim" href="products.xhtml"/>
+    </b:navbarLinks>
+
+    <h:form rendered="#{not empty clientController.client}">
+        <b:navbarLinks pull="right">
+            <li>
+                <b:navCommandLink action="#{clientController.logout()}">
+                    <b:iconAwesome name="sign-out" styleClass="fa-fw"/>
+                    Kilépés
+                </b:navCommandLink>
+            </li>
+        </b:navbarLinks>
+    </h:form>
+</b:navBar>
+
+</html>
