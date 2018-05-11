@@ -1,4 +1,4 @@
-package hu.unideb.inf.prtpk.moneyBox.service.validator;
+package hu.unideb.inf.prtpk.moneyBox.Error;
 
 /**
  * <pre>Hibák megjelenítésére szolgáló osztály.</pre>
@@ -8,7 +8,7 @@ public class Error {
     /**
      * Mely mezőnél keletkezett a probléma.
      */
-    private String field;
+    private ErrorField field;
 
     /**
      * A hiba leírása.
@@ -21,7 +21,7 @@ public class Error {
      * @param field   {@link #field}
      * @param message {@link #message}
      */
-    public Error(String field, String message) {
+    public Error(ErrorField field, String message) {
         this.field = field;
         this.message = message;
     }
@@ -29,14 +29,14 @@ public class Error {
     /**
      * @return {@link #field}
      */
-    public String getField() {
+    public ErrorField getField() {
         return field;
     }
 
     /**
      * @param field {@link #field}
      */
-    public void setField(String field) {
+    public void setField(ErrorField field) {
         this.field = field;
     }
 
