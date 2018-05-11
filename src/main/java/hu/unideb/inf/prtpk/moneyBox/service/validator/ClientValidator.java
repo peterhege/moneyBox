@@ -93,7 +93,7 @@ public class ClientValidator implements Validator<Client> {
         if (!EmailValidator.getInstance().isValid(client.getEmail())) {
             errorList.add(new Error(
                     ErrorField.EMAIL,
-                    "Helytelen e-mail cím."
+                    "Helytelen e-mail cím formátum."
             ));
             logger.warn("Client email is invalid! " + client.getEmail());
         }

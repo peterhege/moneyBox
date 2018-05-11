@@ -13,7 +13,7 @@ public enum ErrorField {
      */
     PASSWORD,
     /**
-     * e-mail cím;
+     * e-mail cím.
      */
     EMAIL,
     /**
