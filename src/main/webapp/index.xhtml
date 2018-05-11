@@ -3,128 +3,26 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
     <title>MoneyBox</title>
 
     <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300&amp;subset=latin-ext" rel="stylesheet"/>
+    <link href="css/style.css" type="text/css" rel="stylesheet" />
 
 </h:head>
 <h:body style="margin-top: 70px; font-family: 'Open Sans'">
-    <b:navBar brand="MoneyBox" style="text-transform: uppercase;" brandHref="#" inverse="true" fixed="top"
-              sticky="true">
-        <b:navbarLinks rendered="#{not empty clientController.client}">
-            <b:navLink value="Home" href="#"/>
-            <b:navLink value="Link" href="#"/>
-            <b:navLink value="Link" href="#"/>
-        </b:navbarLinks>
-
-        <h:form rendered="#{not empty clientController.client}">
-            <b:navbarLinks pull="right">
-                <li>
-                    <b:navCommandLink action="#{clientController.logout()}">
-                        <b:iconAwesome name="sign-out" styleClass="fa-fw"/>
-                        Kilépés
-                    </b:navCommandLink>
-                </li>
-            </b:navbarLinks>
-        </h:form>
-    </b:navBar>
+    <ui:include src="blocks/navbar.xhtml"/>
 
     <b:container>
         <h:panelGroup rendered="#{empty clientController.client}">
             <b:container>
                 <b:row>
                     <div class="col-sm-6">
-                        <h:form styleClass="form-signin" prependId="false" style="width: 70%; margin: 0 auto;">
-                            <h:outputFormat rendered="#{not empty clientController.loginErrors}">
-                                <ui:repeat value="#{clientController.loginErrors}" var="error">
-                                    <p class="alert alert-danger">
-                                        <strong>Sikertelen belépés!</strong>
-                                        #{error}
-                                    </p>
-                                </ui:repeat>
-                            </h:outputFormat>
-                            <h2 class="form-signin-heading"
-                                style="text-align: center; text-transform: uppercase;">Belépés</h2>
-                            <b:inputText id="userName" placeholder="Felhasználónév"
-                                         value="#{clientController.userName}">
-                                <f:facet name="prepend">
-                                    <b:icon name="user"/>
-                                </f:facet>
-                            </b:inputText>
-                            <b:inputText id="password" placeholder="Jelszó" type="password">
-                                <f:facet name="prepend">
-                                    <b:iconAwesome name="key"/>
-                                </f:facet>
-                            </b:inputText>
-                            <b:commandButton look="primary btn-block" size="lg" action="#{clientController.login()}">
-                                <b:iconAwesome name="sign-in" styleClass="fa-fw"/>
-                                Belépés
-                            </b:commandButton>
-                        </h:form>
+                        <ui:include src="blocks/loginForm.xhtml"/>
                     </div>
                     <div class="col-sm-6">
-                        <h:form styleClass="form-signin" prependId="false" style="width: 70%; margin: 0 auto;">
-                            <h:outputFormat rendered="#{not empty clientController.loginErrors}">
-                                <ui:repeat value="#{clientController.regErrors}" var="error">
-                                    <p class="alert alert-danger">
-                                        <strong>Sikertelen regisztráció!</strong>
-                                        #{error}
-                                    </p>
-                                </ui:repeat>
-                            </h:outputFormat>
-                            <h2 class="form-signin-heading"
-                                style="text-align: center; text-transform: uppercase;">Regisztrálás</h2>
-                            <b:inputText id="regUserName" placeholder="Felhasználónév"
-                                         value="#{clientController.userName}">
-                                <f:facet name="prepend">
-                                    <b:icon name="user"/>
-                                </f:facet>
-                            </b:inputText>
-                            <h:outputFormat rendered="#{not empty clientController.userNameErrors}">
-                                <ui:repeat value="#{clientController.userNameErrors}" var="error">
-                                    <p class="text text-danger">
-                                        <strong>Hibás felhasználónév!</strong>
-                                        #{error}
-                                    </p>
-                                </ui:repeat>
-                            </h:outputFormat>
-                            <b:inputText id="regEMail" placeholder="e-mail"
-                                         value="#{clientController.email}">
-                                <f:facet name="prepend">
-                                    <b:icon name="envelope"/>
-                                </f:facet>
-                            </b:inputText>
-                            <h:outputFormat rendered="#{not empty clientController.emailErrors}">
-                                <ui:repeat value="#{clientController.emailErrors}" var="error">
-                                    <p class="text text-danger">
-                                        <strong>Hibás e-mail cím!</strong>
-                                        #{error}
-                                    </p>
-                                </ui:repeat>
-                            </h:outputFormat>
-                            <b:inputText id="regPassword" placeholder="Jelszó" type="password"
-                                         value="#{clientController.password}">
-                                <f:facet name="prepend">
-                                    <b:iconAwesome name="key"/>
-                                </f:facet>
-                            </b:inputText>
-                            <h:outputFormat rendered="#{not empty clientController.passwordErrros}">
-                                <ui:repeat value="#{clientController.passwordErrros}" var="error">
-                                    <p class="text text-danger">
-                                        <strong>Hibás jelszó!</strong>
-                                        #{error}
-                                    </p>
-                                </ui:repeat>
-                            </h:outputFormat>
-                            <b:commandButton look="primary btn-block" size="lg"
-                                             action="#{clientController.registration()}">
-                                <b:iconAwesome name="sign-in" styleClass="fa-fw"/>
-                                Regisztálás
-                            </b:commandButton>
-                        </h:form>
+                        <ui:include src="blocks/registrationForm.xhtml"/>
                     </div>
                 </b:row>
             </b:container>

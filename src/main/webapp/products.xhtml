@@ -1,0 +1,41 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+<ui:composition template="index.xhtml">
+    <ui:define name="content">
+        <h2 style="text-align: center;">Termékeim</h2>
+        <h:outputFormat rendered="#{empty clientController.client.getProducts()}">
+            <p class="alert alert-warning">
+                <strong>Hoppá!</strong>
+                Még nincsenek termékeid.
+            </p>
+        </h:outputFormat>
+
+        <div class="new-product-popup">
+            <ui:insert name="newProductForm">
+                <h:form>
+                    <p>Kérlek, add meg a megvásárolható termék címét</p>
+                    <b:inputText id="url" placeholder="Termék url címe" value="#{productController.url}">
+                        <f:facet name="prepend">
+                            <b:iconAwesome name="link" styleClass="fa-fw"/>
+                        </f:facet>
+                    </b:inputText>
+                    <p class="text text-muted">Ha nem ismert, hagyd üresen.</p>
+                    <b:commandButton look="primary btn-block" size="lg" action="#{productController.loadFromUrl()}">
+                        Tovább
+                        <b:iconAwesome name="arrow-right" styleClass="fa-fw"/>
+                    </b:commandButton>
+                </h:form>
+
+            </ui:insert>
+        </div>
+
+        <div class="new-product-button">
+            <b:iconAwesome name="plus"/>
+        </div>
+    </ui:define>
+
+</ui:composition>
+</html>
