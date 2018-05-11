@@ -17,7 +17,27 @@ public enum ErrorField {
      */
     EMAIL,
     /**
-     * Felhasználóval kapcsolatos problémák
+     * Felhasználóval kapcsolatos problémák.
      */
-    CLIENT
+    CLIENT,
+    /**
+     * Termék neve.
+     */
+    PRODUCT_NAME,
+    /**
+     * Összeg.
+     */
+    PRICE,
+    /**
+     * Webcím.
+     */
+    URL,
+    /**
+     * Spórolt összeg.
+     */
+    SAVED_AMOUNT,
+    /**
+     * Termékkel kapcsolatos problémák.
+     */
+    PRODUCT
 }
