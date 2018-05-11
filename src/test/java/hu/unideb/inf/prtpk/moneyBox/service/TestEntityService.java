@@ -14,8 +14,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class TestEntityService {
     private EntityManager entityManager;
@@ -103,8 +105,7 @@ public class TestEntityService {
     @Test
     public void testRemoveClient() {
         entityService.createClient(user);
-        Client client = clientDAO.findByName(user.getClientName()).get();
-        entityService.removeClient(client.getId());
+        clientDAO.findByName(user.getClientName()).ifPresent(c -> entityService.removeClient(c.getId()));
 
         List<Client> clients = clientDAO.getAll();
 
@@ -118,7 +119,7 @@ public class TestEntityService {
         try {
             entityService.removeClient(1L);
         } catch (EntityNotFoundException e) {
-            System.out.println(e);
+            System.out.println(e.toString());
         }
 
         List<Client> clients = clientDAO.getAll();
@@ -130,11 +131,19 @@ public class TestEntityService {
 
     @Test
     public void testUpdateClient() {
+        Client updatableClient = new Client();
+        Client updatedClient = new Client();
+
         entityService.createClient(user);
-        Client updatableClient = clientDAO.findByName(user.getClientName()).get();
+
+        Optional<Client> optionalClient = clientDAO.findByName(user.getClientName());
+        if (optionalClient.isPresent()) updatableClient = optionalClient.get();
         updatableClient.setClientName("mrcsempe");
+
         entityService.updateClient(updatableClient);
-        Client updatedClient = clientDAO.findById(updatableClient.getId()).get();
+
+        optionalClient = clientDAO.findById(updatableClient.getId());
+        if(optionalClient.isPresent()) updatedClient = optionalClient.get();
 
         assertEquals(updatableClient, updatedClient);
 
@@ -158,13 +167,17 @@ public class TestEntityService {
     public void testUpdateInvalidClient() {
         entityService.createClient(user);
 
-        Client client = clientDAO.findByName(user.getClientName()).get();
+        Client client = new Client();
+        Optional<Client> optionalClient = clientDAO.findByName(user.getClientName());
+        if(optionalClient.isPresent()) client = optionalClient.get();
         client.setClientName("b");
         client.setPassword("a");
         client.setEmail("a");
         entityService.updateClient(client);
 
-        Client clientX = clientDAO.findById(client.getId()).get();
+        Client clientX = new Client();
+        optionalClient = clientDAO.findById(client.getId());
+        if(optionalClient.isPresent()) clientX = optionalClient.get();
 
         assertEquals(user, clientX);
 
@@ -193,6 +206,20 @@ public class TestEntityService {
         List<Product> products = productDAO.getAll();
 
         assertEquals(0, products.size());
+
+        clearAllTable();
+    }
+
+    @Test
+    public void testFindClientByNameAndPass() {
+        EntityService entityService = new EntityServiceImpl();
+        entityService.createClient(user);
+
+        Optional<Client> clientOptional = entityService.findClientByNameAndPass(user.getClientName(), user.getPassword());
+        assertEquals(Optional.of(user), clientOptional);
+
+        Optional<Client> clientOptional2 = entityService.findClientByNameAndPass("test", "test");
+        assertEquals(Optional.empty(), clientOptional2);
 
         clearAllTable();
     }
