@@ -24,4 +24,13 @@ public interface ClientDAO extends GenericDAO<Client, Long> {
      * @return {@link Client}
      */
     Optional<Client> findByEmail(String email);
+
+    /**
+     * <pre>Felhasználó keresése felhasználónév és jelszó páros alapján.</pre>
+     *
+     * @param userName Felhasználónév.
+     * @param password Jelszó.
+     * @return {@link Client}
+     */
+    Optional<Client> findByNameAndPass(String userName, String password);
 }

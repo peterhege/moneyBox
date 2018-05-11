@@ -1,10 +1,12 @@
 package hu.unideb.inf.prtpk.moneyBox.service;
 
+import hu.unideb.inf.prtpk.moneyBox.dao.ClientDAOImpl;
+import hu.unideb.inf.prtpk.moneyBox.dao.ProductDAOImpl;
 import hu.unideb.inf.prtpk.moneyBox.dao.api.*;
 import hu.unideb.inf.prtpk.moneyBox.model.*;
 import hu.unideb.inf.prtpk.moneyBox.service.validator.*;
 import hu.unideb.inf.prtpk.moneyBox.service.api.EntityService;
-import hu.unideb.inf.prtpk.moneyBox.service.validator.Error;
+import hu.unideb.inf.prtpk.moneyBox.Error.Error;
 import hu.unideb.inf.prtpk.moneyBox.service.validator.api.Validator;
 import hu.unideb.inf.prtpk.moneyBox.service.validator.enums.ValidateType;
 import hu.unideb.inf.prtpk.moneyBox.utility.EntityManagerFactoryUtil;
@@ -49,12 +51,22 @@ public class EntityServiceImpl implements EntityService {
     private Validator<Product> productValidator;
 
     /**
+     * <pre>Üres konstruktor.</pre>
+     */
+    public EntityServiceImpl(){
+        this.clientDAO = new ClientDAOImpl();
+        this.productDAO = new ProductDAOImpl();
+        this.clientValidator = new ClientValidator(clientDAO);
+        this.productValidator = new ProductValidator(productDAO, clientDAO);
+    }
+
+    /**
      * <pre>Konstruktor.</pre>
      *
      * @param clientDAO  Az ügyfeleket kezelő {@link ClientDAO} példánya
      * @param productDAO A termékeket kezelő {@link ProductDAO} példánya
      */
-    EntityServiceImpl(ClientDAO clientDAO, ProductDAO productDAO) {
+    public EntityServiceImpl(ClientDAO clientDAO, ProductDAO productDAO) {
         this.clientDAO = clientDAO;
         this.productDAO = productDAO;
         this.clientValidator = new ClientValidator(clientDAO);
@@ -99,5 +111,10 @@ public class EntityServiceImpl implements EntityService {
         if (errorList.size() == 0) productDAO.merge(product);
 
         return new ArrayList<>();
+    }
+
+    @Override
+    public Optional<Client> findClientByNameAndPass(String userName, String password) {
+        return clientDAO.findByNameAndPass(userName, password);
     }
 }

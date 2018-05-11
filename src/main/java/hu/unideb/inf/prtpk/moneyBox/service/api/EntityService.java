@@ -2,9 +2,10 @@ package hu.unideb.inf.prtpk.moneyBox.service.api;
 
 import hu.unideb.inf.prtpk.moneyBox.model.Client;
 import hu.unideb.inf.prtpk.moneyBox.model.Product;
-import hu.unideb.inf.prtpk.moneyBox.service.validator.Error;
+import hu.unideb.inf.prtpk.moneyBox.Error.Error;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * <pre>Entitások kezelése az üzleti rétegben.</pre>
@@ -42,4 +43,13 @@ public interface EntityService {
      * @return Hibák {@link Error} listája.
      */
     List<Error> createAndAddProductToClient(Client client, Product product);
+
+    /**
+     * <pre>Felhasználó keresése Felhasználónév, Jelszó páros alapján.</pre>
+     *
+     * @param userName Felhasználónév
+     * @param password Jelszó
+     * @return {@link Client} {@link Optional}
+     */
+    Optional<Client> findClientByNameAndPass(String userName, String password);
 }

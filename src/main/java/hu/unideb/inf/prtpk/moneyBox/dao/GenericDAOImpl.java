@@ -29,7 +29,7 @@ public class GenericDAOImpl<T, ID> implements GenericDAO<T, ID> {
     /**
      * <pre>EntityManager előkészítése.</pre>
      */
-    private EntityManager entityManager;
+    EntityManager entityManager;
 
     /**
      * <pre>A kiterjesztett DAO típusa.</pre>
