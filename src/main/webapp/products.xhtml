@@ -12,10 +12,19 @@
                 Még nincsenek termékeid.
             </p>
         </h:outputFormat>
-
-        <div class="new-product-popup">
-            <ui:insert name="newProductForm">
+        <h:outputFormat rendered="#{not empty clientController.client.getProducts()}">
+            <ul>
+                <ui:repeat value="#{clientController.client.getProducts()}" var="product">
+                    <li>#{product.name} - #{product.price} - #{product.savedAmount}</li>
+                </ui:repeat>
+            </ul>
+        </h:outputFormat>
+        <ui:insert name="newProductForm">
+            <div class="new-product-popup" style="display: none;">
                 <h:form>
+                    <span class="close-popup">
+                        <b:iconAwesome name="times"/>
+                    </span>
                     <p>Kérlek, add meg a megvásárolható termék címét</p>
                     <b:inputText id="url" placeholder="Termék url címe" value="#{productController.url}">
                         <f:facet name="prepend">
@@ -28,13 +37,22 @@
                         <b:iconAwesome name="arrow-right" styleClass="fa-fw"/>
                     </b:commandButton>
                 </h:form>
+            </div>
+        </ui:insert>
 
-            </ui:insert>
-        </div>
-
-        <div class="new-product-button">
+        <div class="new-product-button" title="Termék hozzáadása">
             <b:iconAwesome name="plus"/>
         </div>
+
+        <script type="text/javascript">
+            $(".new-product-button").click(function () {
+                $(".new-product-popup").show();
+            });
+
+            $(".close-popup").click(function () {
+                $(".new-product-popup").hide();
+            });
+        </script>
     </ui:define>
 
 </ui:composition>

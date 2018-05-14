@@ -32,8 +32,24 @@
     border-radius: 2em;
     color: white;
     margin: 1em;
+    cursor: pointer;
+}
+.new-product-button:hover{
+    background: darkgreen;
 }
 
 .new-product-button span{
     margin: 0 auto;
+}
+
+.close-popup{
+    float: right;
+    font-size: 1.5em;
+    margin-top: -15px;
+    color: #5d5d5d;
+    cursor: pointer;
+}
+
+.close-popup:hover{
+    color: black;
 }

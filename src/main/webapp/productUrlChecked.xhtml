@@ -5,31 +5,30 @@
       xmlns:f="http://java.sun.com/jsf/core">
 <ui:composition template="products.xhtml">
     <ui:define name="newProductForm">
-        <h:form>
-            <p>Kérlek, add meg a megvásárolható termék címét</p>
-            <b:inputText id="url" placeholder="Termék url címe" value="#{productController.url}">
-                <f:facet name="prepend">
-                    <b:iconAwesome name="link" styleClass="fa-fw"/>
-                </f:facet>
-            </b:inputText>
-            <p class="text text-muted">Ha nem ismert, hagyd üresen.</p>
-            <b:inputText id="name" placeholder="Termék neve" value="#{productController.name}">
-                <f:facet name="prepend">
-                    <b:iconAwesome name="archive" styleClass="fa-fw"/>
-                </f:facet>
-            </b:inputText>
-            <b:inputText id="price" placeholder="Termék ára" value="#{productController.price}">
-                <f:facet name="prepend">
-                    <b:iconAwesome name="money" styleClass="fa-fw"/>
-                </f:facet>
-            </b:inputText>
+        <div class="new-product-popup">
+            <h:form>
+                <span class="close-popup">
+                    <b:iconAwesome name="times"/>
+                </span>
+                <h:inputHidden id="url" value="#{productController.url}"/>
+                <b:inputText id="name" label="Termék neve" value="#{productController.name}">
+                    <f:facet name="prepend">
+                        <b:iconAwesome name="archive" styleClass="fa-fw"/>
+                    </f:facet>
+                </b:inputText>
+                <b:inputText label="Termék ára" id="price" placeholder="Termék ára" value="#{productController.price}">
+                    <f:facet name="prepend">
+                        <b:iconAwesome name="money" styleClass="fa-fw"/>
+                    </f:facet>
+                </b:inputText>
 
-            <b:commandButton look="primary btn-block" size="lg" action="#{productController.createProduct()}">
-                <b:iconAwesome name="floppy-o" styleClass="fa-fw"/>
-                Mentés
-            </b:commandButton>
+                <b:commandButton look="primary btn-block" size="lg" action="#{productController.createProduct()}">
+                    <b:iconAwesome name="floppy-o" styleClass="fa-fw"/>
+                    Mentés
+                </b:commandButton>
 
-        </h:form>
+            </h:form>
+        </div>
     </ui:define>
 </ui:composition>
 </html>
