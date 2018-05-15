@@ -6,9 +6,6 @@
         <div class="popup new-product-popup" style="display: #{productController.urlIsChecked ? 'flex' : 'none'};">
             <ui:include src="blocks/newProductForm.xhtml"/>
         </div>
-        <!--<div class="popup inc-saved-amount">-->
-            <!--<ui:include src="blocks/incProductSavedAmountForm.xhtml"/>-->
-        <!--</div>-->
 
         <h2 style="text-align: center;">Termékeim</h2>
         <div>
@@ -23,10 +20,6 @@
             $(".new-product-button").click(function () {
                 $(".new-product-popup").show();
             });
-
-            // $(".add-amount").click(function () {
-            //     $(".inc-saved-amount").show();
-            // });
 
             $(".close-popup").click(function () {
                 $(".popup").hide();

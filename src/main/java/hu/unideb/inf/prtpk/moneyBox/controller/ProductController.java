@@ -12,6 +12,8 @@ import org.slf4j.LoggerFactory;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -294,6 +296,7 @@ public class ProductController implements Serializable {
      * @return Oldal.
      */
     public String incSavedAmount(Product product) {
+
         logger.debug("Product: " + product + ", " + inc);
         product.setSavedAmount(product.getSavedAmount() + inc);
         entityService.updateProduct(product);

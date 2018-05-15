@@ -106,11 +106,15 @@ public class EntityServiceImpl implements EntityService {
     public List<Error> createAndAddProductToClient(Client client, Product product) {
         logger.info("Create Product");
 
+        List<Product> clientProducts = client.getProducts();
+        client.setProducts(new ArrayList<>());
+
         product.setClient(client);
         List<Error> errorList = productValidator.validate(product, ValidateType.CREATE);
         if (errorList.size() == 0) {
             Long id = productDAO.merge(product);
-            productDAO.findById(id).ifPresent(client::addProduct);
+            productDAO.findById(id).ifPresent(clientProducts::add);
+            client.setProducts(clientProducts);
             logger.debug("Saved product ID: " + id);
         }
 
