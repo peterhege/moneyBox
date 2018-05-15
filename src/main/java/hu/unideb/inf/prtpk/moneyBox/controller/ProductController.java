@@ -293,7 +293,7 @@ public class ProductController implements Serializable {
      * @param product {@link #product}
      * @return Oldal.
      */
-    public String incSavedAmount() {
+    public String incSavedAmount(Product product) {
         logger.debug("Product: " + product + ", " + inc);
         product.setSavedAmount(product.getSavedAmount() + inc);
         entityService.updateProduct(product);
