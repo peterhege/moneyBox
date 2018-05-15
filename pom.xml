@@ -44,6 +44,20 @@
         <main.class>hu.unideb.inf.prtpk.moneyBox.app.MainApp</main.class>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>maven.oracle.com</id>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <url>https://maven.oracle.com</url>
+            <layout>default</layout>
+        </repository>
+    </repositories>
+
     <dependencies>
 
         <!-- Hibernate -->
@@ -59,11 +73,16 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- Derby -->
+        <!-- DB -->
+        <!--<dependency>-->
+            <!--<groupId>org.apache.derby</groupId>-->
+            <!--<artifactId>derbyclient</artifactId>-->
+            <!--<version>10.14.1.0</version>-->
+        <!--</dependency>-->
         <dependency>
-            <groupId>org.apache.derby</groupId>
-            <artifactId>derbyclient</artifactId>
-            <version>10.14.1.0</version>
+            <groupId>com.oracle.jdbc</groupId>
+            <artifactId>ojdbc8</artifactId>
+            <version>12.2.0.1</version>
         </dependency>
 
         <!-- Junit -->
