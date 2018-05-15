@@ -52,4 +52,12 @@ public interface EntityService {
      * @return {@link Client} {@link Optional}
      */
     Optional<Client> findClientByNameAndPass(String userName, String password);
+
+
+    /**
+     * <pre>Termék frissítése.</pre>
+     * @param product {@link Product} entitás
+     * @return Hibák listája.
+     */
+    List<Error> updateProduct(Product product);
 }

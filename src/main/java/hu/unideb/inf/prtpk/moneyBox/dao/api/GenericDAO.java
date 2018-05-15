@@ -61,13 +61,6 @@ public interface GenericDAO<T, ID> {
     void remove(T entity);
 
     /**
-     * <pre>Adatbázisbeli entitás összefésülése a módosított példányával.</pre>
-     *
-     * @param entity Entitás példánya
-     */
-    void merge(T entity);
-
-    /**
      * <pre>Entitás adatainak frissítése.</pre>
      *
      * @param entity Entitás példánya

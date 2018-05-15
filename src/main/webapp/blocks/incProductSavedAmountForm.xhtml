@@ -1,0 +1,21 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+<h:form>
+    <span class="close-popup">
+        <b:iconAwesome name="times"/>
+    </span>
+    <!--<h:inputHidden value="#{productController.product}"/>-->
+    <b:inputText id="incSavedAmount" label="Spórolt összeg növekmény" value="#{productController.inc}">
+        <f:facet name="prepend">
+            <b:iconAwesome name="plus" styleClass="fa-fw"/>
+        </f:facet>
+    </b:inputText>
+    <b:commandButton look="primary btn-block" size="lg"
+                     action="#{productController.incSavedAmount()}">
+        <b:iconAwesome name="floppy-o" styleClass="fa-fw"/>
+        Mentés
+    </b:commandButton>
+</h:form>
+</html>

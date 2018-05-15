@@ -1,44 +1,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:b="http://bootsfaces.net/ui"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:ui="http://java.sun.com/jsf/facelets">
 <ui:composition template="index.xhtml">
     <ui:define name="content">
+        <div class="popup new-product-popup" style="display: #{productController.urlIsChecked ? 'flex' : 'none'};">
+            <ui:include src="blocks/newProductForm.xhtml"/>
+        </div>
+        <!--<div class="popup inc-saved-amount">-->
+            <!--<ui:include src="blocks/incProductSavedAmountForm.xhtml"/>-->
+        <!--</div>-->
+
         <h2 style="text-align: center;">Termékeim</h2>
-        <h:outputFormat rendered="#{empty clientController.client.getProducts()}">
-            <p class="alert alert-warning">
-                <strong>Hoppá!</strong>
-                Még nincsenek termékeid.
-            </p>
-        </h:outputFormat>
-        <h:outputFormat rendered="#{not empty clientController.client.getProducts()}">
-            <ul>
-                <ui:repeat value="#{clientController.client.getProducts()}" var="product">
-                    <li>#{product.name} - #{product.price} - #{product.savedAmount}</li>
-                </ui:repeat>
-            </ul>
-        </h:outputFormat>
-        <ui:insert name="newProductForm">
-            <div class="new-product-popup" style="display: none;">
-                <h:form>
-                    <span class="close-popup">
-                        <b:iconAwesome name="times"/>
-                    </span>
-                    <p>Kérlek, add meg a megvásárolható termék címét</p>
-                    <b:inputText id="url" placeholder="Termék url címe" value="#{productController.url}">
-                        <f:facet name="prepend">
-                            <b:iconAwesome name="link" styleClass="fa-fw"/>
-                        </f:facet>
-                    </b:inputText>
-                    <p class="text text-muted">Ha nem ismert, hagyd üresen.</p>
-                    <b:commandButton look="primary btn-block" size="lg" action="#{productController.loadFromUrl()}">
-                        Tovább
-                        <b:iconAwesome name="arrow-right" styleClass="fa-fw"/>
-                    </b:commandButton>
-                </h:form>
-            </div>
-        </ui:insert>
+        <div>
+            <ui:include src="blocks/productList.xhtml"/>
+        </div>
 
         <div class="new-product-button" title="Termék hozzáadása">
             <b:iconAwesome name="plus"/>
@@ -49,8 +24,12 @@
                 $(".new-product-popup").show();
             });
 
+            // $(".add-amount").click(function () {
+            //     $(".inc-saved-amount").show();
+            // });
+
             $(".close-popup").click(function () {
-                $(".new-product-popup").hide();
+                $(".popup").hide();
             });
         </script>
     </ui:define>

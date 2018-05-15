@@ -1,0 +1,59 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<h:outputFormat rendered="#{empty clientController.client.getProducts()}">
+    <p class="alert alert-warning">
+        <strong>Hoppá!</strong>
+        Még nincsenek termékeid.
+    </p>
+</h:outputFormat>
+<h:outputFormat rendered="#{not empty clientController.client.getProducts()}">
+    <ul class="product-list">
+        <ui:repeat value="#{clientController.client.getProducts()}" var="product">
+            <li class="row">
+                <div class="col-sm-3">
+                    <div class="product-image"/>
+                </div>
+                <div class="col-sm-6">
+                    <h1>
+                        <a href="#{product.url}" target="_blank">#{product.name}</a>
+                    </h1>
+                    <p style="font-size: 1.2em;">
+                        <h:outputText value="#{product.price}">
+                            <f:convertNumber minFractionDigits="0"/>
+                        </h:outputText>
+                        <span>Ft</span>
+                        <span> / </span>
+                        <h:outputText value="#{product.savedAmount}">
+                            <f:convertNumber minFractionDigits="0"/>
+                        </h:outputText>
+                        <span>Ft</span>
+                        <h:form>
+                            <b:inputText id="incSavedAmount" value="#{productController.inc}">
+                                <f:facet name="prepend">
+                                    <b:iconAwesome name="money" styleClass="fa-fw"/>
+                                </f:facet>
+                                <f:facet name="append">
+                                    <b:commandButton action="#{productController.incSavedAmount(product)}"
+                                                     styleClass="add-amount">
+                                        <b:iconAwesome name="plus"/>
+                                    </b:commandButton>
+                                </f:facet>
+                            </b:inputText>
+
+                        </h:form>
+                    </p>
+                    <div class="w3-light-grey w3-round-xlarge">
+                        <ui:param name="percent" value="#{product.savedAmount * 100 / product.price}"/>
+                        <div class="w3-container w3-green w3-round-xlarge" style="width:#{percent}%">#{percent}%</div>
+                    </div>
+                </div>
+            </li>
+        </ui:repeat>
+    </ul>
+</h:outputFormat>
+
+</html>

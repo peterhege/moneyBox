@@ -53,7 +53,7 @@ public class EntityServiceImpl implements EntityService {
     /**
      * <pre>Üres konstruktor.</pre>
      */
-    public EntityServiceImpl(){
+    public EntityServiceImpl() {
         this.clientDAO = new ClientDAOImpl();
         this.productDAO = new ProductDAOImpl();
         this.clientValidator = new ClientValidator(clientDAO);
@@ -105,16 +105,30 @@ public class EntityServiceImpl implements EntityService {
     @Override
     public List<Error> createAndAddProductToClient(Client client, Product product) {
         logger.info("Create Product");
-        client.addProduct(product);
+
         product.setClient(client);
         List<Error> errorList = productValidator.validate(product, ValidateType.CREATE);
-        if (errorList.size() == 0) productDAO.merge(product);
+        if (errorList.size() == 0) {
+            Long id = productDAO.merge(product);
+            productDAO.findById(id).ifPresent(client::addProduct);
+            logger.debug("Saved product ID: " + id);
+        }
 
-        return new ArrayList<>();
+        return errorList;
     }
 
     @Override
     public Optional<Client> findClientByNameAndPass(String userName, String password) {
         return clientDAO.findByNameAndPass(userName, password);
+    }
+
+    @Override
+    public List<Error> updateProduct(Product product) {
+        logger.info("Update Product");
+        if(product.getPrice() < product.getSavedAmount()) product.setSavedAmount(product.getPrice());
+        List<Error> errorList = productValidator.validate(product, ValidateType.UPDATE);
+        if (errorList.size() == 0) productDAO.merge(product);
+
+        return errorList;
     }
 }

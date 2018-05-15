@@ -192,7 +192,6 @@ public class TestEntityService {
         List<Product> products = productDAO.getAll();
 
         assertEquals(1, products.size());
-        assertEquals(product, user.getProducts().get(0));
 
         clearAllTable();
     }
@@ -220,6 +219,57 @@ public class TestEntityService {
 
         Optional<Client> clientOptional2 = entityService.findClientByNameAndPass("test", "test");
         assertEquals(Optional.empty(), clientOptional2);
+
+        clearAllTable();
+    }
+
+    @Test
+    public void testUpdateProduct() {
+        Product updatableProduct;
+        Product updatedProduct = new Product();
+        Client client = new Client();
+
+        entityService.createClient(user);
+
+        Optional<Client> optionalClient = clientDAO.findByName(user.getClientName());
+        if (optionalClient.isPresent()) client = optionalClient.get();
+
+        entityService.createAndAddProductToClient(client, product);
+
+        List<Product> products = productDAO.getAll();
+        updatableProduct = products.get(0);
+        System.out.println(updatableProduct);
+
+        updatableProduct.setName("termék");
+
+        entityService.updateProduct(updatableProduct);
+
+        Optional<Product> optionalProduct = productDAO.findById(updatableProduct.getId());
+        if(optionalProduct.isPresent()) updatedProduct = optionalProduct.get();
+
+        assertEquals(updatableProduct, updatedProduct);
+
+        updatableProduct.setSavedAmount(300000000);
+
+        entityService.updateProduct(updatableProduct);
+
+        optionalProduct = productDAO.findById(updatableProduct.getId());
+        if(optionalProduct.isPresent()) updatedProduct = optionalProduct.get();
+
+        assertEquals(updatedProduct.getPrice(), updatedProduct.getSavedAmount());
+
+        Product nonEditedProduct = updatableProduct;
+
+        updatableProduct.setName("a");
+        updatableProduct.setUrl("a");
+        updatableProduct.setPrice(-1);
+
+        entityService.updateProduct(updatableProduct);
+
+        optionalProduct = productDAO.findById(updatableProduct.getId());
+        if(optionalProduct.isPresent()) updatedProduct = optionalProduct.get();
+
+        assertEquals(nonEditedProduct, updatedProduct);
 
         clearAllTable();
     }
